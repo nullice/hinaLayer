@@ -24,7 +24,7 @@ using namespace std;
 /// <param name="filename">要打开的图像文件名.</param>
 /// <param name="mono">是否打开作为单色图像，0为彩色，1为单色，缺省为0.</param>
 /// <returns>返回0打开文件失败</returns>
-int hinaLayer::openfile(char* filename, int mono = 0)
+int hinaLayer::openfile(char* filename, int mono)
 {
 	auto image = imread(filename,(mono==1)?0:1);
 	if(image.empty())
@@ -35,15 +35,21 @@ int hinaLayer::openfile(char* filename, int mono = 0)
 	return 1;
 }
 
-int writefile(char* filename)
+/// <summary>
+/// 写出保存 hinaLayer 的图像.
+/// </summary>
+/// <param name="filename">写出文件名.</param>
+/// <returns>int.</returns>
+int hinaLayer::writefile(char* filename)
 {
-	
+	bool b = imwrite(filename,image);
+	if (b!=true)
+	{
+		cerr<<"写到文件"<<filename<<"失败";
+		return 0;
+	}
+	return 1;
 }
-
-
-
-
-
 
 /// <summary>
 /// 重新设置图像大小，图像内容将被拉伸.
@@ -57,6 +63,20 @@ void hinaLayer::resize(int w,int h)
     cv::resize(image,temp,temp.size(),0,0,CV_INTER_NN);
 	temp.copyTo(image);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
