@@ -16,7 +16,6 @@ int main()
 	j.openfile("tt.jpg");
 
 
-
 }
 
 
