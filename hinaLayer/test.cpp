@@ -14,8 +14,7 @@ int main()
 	cout<<11;
 	hinaLayer j;
 	j.openfile("tt.jpg");
-
-
+	j.show();
 }
 
 

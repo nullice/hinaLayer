@@ -1,6 +1,3 @@
-
-
-
 #ifndef HINALAYER_H
 #define HINALAYER_H
 
@@ -24,7 +21,7 @@ public:
 	int writefile(char* filename);
 
 	void resize(int w,int h);
-
+	void show();
 
 
 	//out

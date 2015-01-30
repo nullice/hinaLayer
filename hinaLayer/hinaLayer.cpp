@@ -1,5 +1,4 @@
 #include "hinaLayer.h"
-//C++
 #include <iostream>
 #include <string>
 #include<bitset>
@@ -26,7 +25,7 @@ using namespace std;
 /// <returns>返回0打开文件失败</returns>
 int hinaLayer::openfile(char* filename, int mono)
 {
-	auto image = imread(filename,(mono==1)?0:1);
+	image = imread(filename,(mono==1)?0:1);
 	if(image.empty())
 	{
 		cerr << "载入图片: "<<filename<<" 失败。" << endl;
@@ -65,6 +64,11 @@ void hinaLayer::resize(int w,int h)
 }
 
 
+void hinaLayer::show()
+{
+	imshow("Viwe", image);
+	waitKey(0);
+}
 
 
 
