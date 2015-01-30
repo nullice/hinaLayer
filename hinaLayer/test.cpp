@@ -13,8 +13,12 @@ int main()
 {
 	cout<<11;
 	hinaLayer j;
-	j.openfile("tt.jpg");
+	j.openfile("oo.jpg");
+	j.mirrorX();
+	j.mirrorY();
 	j.show();
+
+	
 }
 
 
