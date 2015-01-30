@@ -69,7 +69,14 @@ void hinaLayer::resize(int w,int h)
 /// </summary>
 void hinaLayer::show()
 {
-	imshow("预览", image);
+	imshow("预览原图（image）", image);
+	waitKey(0);
+}
+
+
+void hinaLayer::dtf_show()
+{
+	imshow("预览DTF频域图（fdomain）", fdomain);
 	waitKey(0);
 }
 
@@ -99,6 +106,13 @@ void hinaLayer::mirrorY()
 
 
 
+
+
+/// <summary>
+/// 预处理，把输入图像转换为能进行DFT的中间矩阵，并且进行过DFT转换,结果在 mmat 中.
+/// </summary>
+/// <param name="rgb">RGB通道, 0~2 顺序BGR ,3 为处理全通道),.</param>
+/// <returns>int.</returns>
 int hinaLayer::dtf_make(int rgb)
 {
 	void make_mmat(Mat& temp, Mat& mmat);
@@ -111,29 +125,81 @@ int hinaLayer::dtf_make(int rgb)
 		for (int i = 0; i < 3; i++)
 		{
 			make_mmat(imageSplit[i],mmat[i]);
+			dft(mmat[i], mmat[i]);
 		}
 	}
 	else
 	{
 		make_mmat(imageSplit[rgb], mmat[rgb]);
+		dft(mmat[rgb], mmat[rgb]);
 	}
+	return 0;
+}
+
+
+int hinaLayer::dtf_inverse_make(int rgb /*= 3*/)
+{
+	void show_idft(const  Mat& in, const Mat& origin, Mat& out);
+
+	if (3 == rgb)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			idft(mmat[i], mmat[i]);
+			show_idft(mmat[i], image, mmat[i]);
+		}
+	}
+	else
+	{
+		idft(mmat[rgb], mmat[rgb]);
+		show_idft(mmat[rgb], image, mmat[rgb]);
+	}
+	return 0;
 }
 
 
 
+/// <summary>
+/// mmat 可视化 ， 让DTF转换后的 mmat 可视化（变为0~1的矩阵）
+/// </summary>
+/// <param name="rgb">The RGB.</param>
+/// <returns>int.</returns>
 int hinaLayer::dtf_print(int rgb /*= 3*/)
 {
 
+	void show_dft(Mat& in, Mat& out);
 
+	if (3 == rgb)
+	{
+		Mat temp[3];
+		for (int i = 0; i < 3; i++)
+		{
+			show_dft(mmat[i], temp[i]);
+		}
+		merge(temp, 3, fdomain);
 
+	}
+	else
+	{
+		show_dft(mmat[rgb], fdomain);
+	}
+	return 0;
 }
+
+void hinaLayer::dtf_mmat_n2c()
+{
+	void mat_n2c(Mat& in);
+	mat_n2c(image);
+}
+
+
+
+
 
 
 
 
 //openCV 操作-----------------------------------
-
-
 void make_mmat(Mat& in, Mat& out) //预处理，把输入图像转换为能进行DFT的中间矩阵,输入&in,输出&out
 {
 	//实数部分	
@@ -154,7 +220,7 @@ void make_mmat(Mat& in, Mat& out) //预处理，把输入图像转换为能进行DFT的中间矩阵,
 }
 
 
-void show_dft(Mat& in, Mat& out)//让dft转换后的Mat可视化（变为0~255的矩阵）
+void show_dft(Mat& in, Mat& out)//让dft转换后的Mat可视化（变为0~1的矩阵）
 {
 
 	//创建2个Mat planes作为容器 ，并把2通道的 &in 分离 
@@ -176,9 +242,52 @@ void show_dft(Mat& in, Mat& out)//让dft转换后的Mat可视化（变为0~255的矩阵）
 }
 
 
+void mat_n2c(Mat& in){
+	/*
+	* +----+----+    +----+----+
+	* |    |    |    |    |    |
+	* | q0 | q1 |    | q3 | q2 |
+	* |    |    |    |    |    |
+	* +----+----+ -> +----+----+
+	* |    |    |    |    |    |
+	* | q2 | q3 |    | q1 | q0 |
+	* |    |    |    |    |    |
+	* +----+----+    +----+----+
+	*/
+	const int half_width = in.cols / 2;
+	const int half_height = in.rows / 2;
+
+	Mat tmp;
+
+	Mat q0(in,
+		Rect(0, 0, half_width, half_height));
+	Mat q1(in,
+		Rect(half_width, 0, half_width, half_height));
+	Mat q2(in,
+		Rect(0, half_height, half_width, half_height));
+	Mat q3(in,
+		Rect(half_width, half_height, half_width, half_height));
+
+	q0.copyTo(tmp);
+	q3.copyTo(q0);
+	tmp.copyTo(q3);
+	q1.copyTo(tmp);
+	q2.copyTo(q1);
+	tmp.copyTo(q2);
+}
 
 
 
+
+
+void show_idft(const Mat& in, const Mat& origin, Mat& out)//in 输入idft 后的矩阵（mmat）,origin 原图 用来取得图像大小 剪掉预处理扩展的边界，out 输出
+{
+
+	Mat splitted_image[2];
+	split(in, splitted_image);
+	splitted_image[0](cv::Rect(0, 0, origin.cols, origin.rows)).copyTo(out);
+	normalize(out, out, 0, 1, CV_MINMAX);
+}
 
 
 /// <summary>
