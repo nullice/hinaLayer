@@ -24,17 +24,18 @@ public:
 	int openfile(char* filename, int mono = 0);//打开文件
 	int writefile(char* filename);//写出文件
 	void show();//预览图像
+	void show_fdomain();//预览频域图像
 
 	void resize(int w,int h);//重设图像大小
 	void mirrorY();//垂直镜像
 	void mirrorX();//水平镜像
 
-	int  dtf_make(int rgb = 3);//转换到DTF中间矩阵
+	int  dtf_make(int rgb = 3);//图像转换到DTF中间矩阵
 	int  dtf_print(int rgb = 3);//DTF中间矩阵可视化，频域图>>fdomain
-	int  dtf_inverse_make(int rgb = 3);
+	int  dtf_inverse_make(int rgb = 3);//DTF中间矩阵逆转换到图像
+	void dtf_mmat_n2c(int rgb = 3);//DTF中间矩阵象限调换
 
-	void dtf_mmat_n2c();
-	void dtf_show();
+	void dtf_to_image(int rgb = 3);
 
 	//out
 };

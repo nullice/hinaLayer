@@ -13,19 +13,16 @@ int main()
 {
 	cout<<11;
 	hinaLayer j;
-	
-	j.openfile("oo.jpg");
-	j.mirrorX();
-	j.mirrorY();
+	j.openfile("OO1.png");
 	j.show();
+	j.dtf_make()
 	j.dtf_make();
-	//j.dtf_print();
+	j.dtf_mmat_n2c();
+	j.dtf_print();
 	j.dtf_inverse_make();
-	imshow("Ğ´ĞÅÏ¢", j.mmat[1]);
-	waitKey(0);
-
-	j.dtf_show();
-	
+	j.dtf_to_image();
+	j.show();
+	j.show_fdomain();
 	
 }
 

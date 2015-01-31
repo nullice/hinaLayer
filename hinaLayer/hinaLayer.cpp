@@ -30,6 +30,7 @@ int hinaLayer::openfile(char* filename, int mono)
 		cerr << "载入图片: "<<filename<<" 失败。" << endl;
 		return 0;
 	}
+	
 	return 1;
 }
 
@@ -74,9 +75,9 @@ void hinaLayer::show()
 }
 
 
-void hinaLayer::dtf_show()
+void hinaLayer::show_fdomain()
 {
-	imshow("预览DTF频域图（fdomain）", fdomain);
+	imshow("预览频域图（fdomain）", fdomain);
 	waitKey(0);
 }
 
@@ -111,7 +112,7 @@ void hinaLayer::mirrorY()
 /// <summary>
 /// 预处理，把输入图像转换为能进行DFT的中间矩阵，并且进行过DFT转换,结果在 mmat 中.
 /// </summary>
-/// <param name="rgb">RGB通道, 0~2 顺序BGR ,3 为处理全通道),.</param>
+/// <param name="rgb">RGB通道, 0~2 顺序BGR ,3 为处理全部通道.</param>
 /// <returns>int.</returns>
 int hinaLayer::dtf_make(int rgb)
 {
@@ -137,10 +138,16 @@ int hinaLayer::dtf_make(int rgb)
 }
 
 
+/// <summary>
+/// DTF中间矩阵逆转换到图像
+/// </summary>
+/// <param name="rgb">RGB通道, 0~2 顺序BGR ,3 为处理全部通道.</param>
+/// <returns>int.</returns>
 int hinaLayer::dtf_inverse_make(int rgb /*= 3*/)
 {
 	void show_idft(const  Mat& in, const Mat& origin, Mat& out);
 
+	
 	if (3 == rgb)
 	{
 		for (int i = 0; i < 3; i++)
@@ -162,7 +169,7 @@ int hinaLayer::dtf_inverse_make(int rgb /*= 3*/)
 /// <summary>
 /// mmat 可视化 ， 让DTF转换后的 mmat 可视化（变为0~1的矩阵）
 /// </summary>
-/// <param name="rgb">The RGB.</param>
+/// <param name="rgb">RGB通道, 0~2 顺序BGR ,3 为处理全部通道.</param>
 /// <returns>int.</returns>
 int hinaLayer::dtf_print(int rgb /*= 3*/)
 {
@@ -186,16 +193,44 @@ int hinaLayer::dtf_print(int rgb /*= 3*/)
 	return 0;
 }
 
-void hinaLayer::dtf_mmat_n2c()
+/// <summary>
+/// DTF中间矩阵象限调换.
+/// </summary>
+/// <param name="rgb">RGB通道, 0~2 顺序BGR ,3 为处理全部通道.</param>
+void hinaLayer::dtf_mmat_n2c(int rgb /*= 3*/)
 {
 	void mat_n2c(Mat& in);
-	mat_n2c(image);
+	
+	if (3 == rgb)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			mat_n2c(mmat[i]);
+		}
+	}
+	else
+	{
+		mat_n2c(mmat[rgb]);
+	}
 }
 
 
-
-
-
+void hinaLayer::dtf_to_image(int rgb)
+{
+	Mat temp[3];
+	if (3 == rgb)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			mmat[i].convertTo(temp[i], image.type(),255);
+		}
+		merge(temp, 3, image);
+	}
+	else
+	{
+		mmat[rgb].convertTo(image, image.type(), 255);
+	}
+}
 
 
 
@@ -351,12 +386,66 @@ void MirrorX(const Mat &in, Mat &out)
 }
 
 
+void writeMx(Mat& in, Mat& info)
+{
+	for (int j = 0; j < info.rows; j++)//按照图像布局打印数值
+	{
+		for (int i = 0; i < info.cols; i++)
+		{
+			in.at<cv::Vec2f>(i, j) = in.at<cv::Vec2f>(i, j)*info.at<uchar>(i, j);
+		}
+	}
+}
 
 
 
 
+void writeINFO(Mat& in, Mat& info)
+{	
+
+	normalize(info, info, 0, 1, CV_MINMAX);
+
+	Mat imageROI;
+	imageROI = in(Rect(0, 0, info.rows, info.cols));
+
+	const int half_width = in.cols / 2;
+	const int half_height = in.rows / 2;
+
+	Mat tmp;
+
+	Mat q0(in,
+		Rect(0, 0, half_width, half_height));
+	Mat q1(in,
+		Rect(half_width, 0, half_width, half_height));
+	Mat q2(in,
+		Rect(0, half_height, half_width, half_height));
+	Mat q3(in,
+		Rect(half_width, half_height, half_width, half_height));
 
 
+	imageROI = q3(Rect(0, 0, info.rows, info.cols));
+
+
+	writeMx(imageROI, info);
+
+	//std::cout<<(int)info.rows<<"="<<info.cols<<std::endl;
+	//std::cout<<(int)q3.rows<<"="<<q3.cols<<std::endl;
+	//imageROI = q0(Rect(q0.rows - info.rows,q0.cols-info.cols,info.rows,info.cols));  
+	imageROI = q0(Rect(q0.cols - info.cols, q0.rows - info.rows, info.rows, info.cols));
+	Mat a, b;
+
+	MirrorY(info, a);
+	MirrorX(a, b);
+	writeMx(imageROI, b);
+
+}
+
+void writeINFO(Mat& in, char* info_f)
+{
+	//获取最大值最小值
+	Mat info = imread(info_f, IMREAD_GRAYSCALE);
+	writeINFO(in, info);
+}
 
 
 
