@@ -33,7 +33,10 @@ public:
 	int  dtf_make(int rgb = 3);//图像转换到DTF中间矩阵
 	int  dtf_print(int rgb = 3);//DTF中间矩阵可视化，频域图>>fdomain
 	int  dtf_inverse_make(int rgb = 3);//DTF中间矩阵逆转换到图像
+	int	 dtf_write_mask(Mat& mask, int rgb = 3);
+	int	 dtf_write_mask(char* mask_file, int rgb = 3);
 	void dtf_mmat_n2c(int rgb = 3);//DTF中间矩阵象限调换
+	
 
 	void dtf_to_image(int rgb = 3);
 

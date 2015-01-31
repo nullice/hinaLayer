@@ -232,6 +232,25 @@ void hinaLayer::dtf_to_image(int rgb)
 	}
 }
 
+int hinaLayer::dtf_write_mask(Mat& mask, int rgb /*= 3*/)
+{
+	Mat temp[3];
+	if (3 == rgb)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			void writeINFO(Mat& in, char* info_f);
+			writeINFO(mmat[i],);
+			
+		}
+		merge(temp, 3, image);
+	}
+	else
+	{
+		mmat[rgb].convertTo(image, image.type(), 255);
+	}
+}
+
 
 
 //openCV ²Ù×÷-----------------------------------
