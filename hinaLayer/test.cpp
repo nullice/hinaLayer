@@ -15,11 +15,19 @@ int main()
 	hinaLayer j;
 	j.open_file("rr.jpg");
 	j.show("打开文件");
+
 	j.eo_write_mask("aaa.png");
 	j.show_eo("写入奇偶水印");
 
-	j.eo_write_file("info.txt");
-	j.eo_out_file("1.txt");
+
+	j.lsb_write_file("test.txt");
+	j.lsb_out_file("1.txt");
+	j.show("结果");
+
+	cout << endl << j.lsb_get_deep("test.txt") << endl;
+	cout << (j.lsb_get_max()) / 1000 << "KB" << endl;
+
+	getchar();
 
 	/*
 	j.dtf_make(2);

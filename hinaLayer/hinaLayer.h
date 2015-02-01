@@ -21,7 +21,7 @@ public:
 	Mat mmat[3];//DTF±ä»»ÓÃ¾ØÕó
 
 	int open_file(char* filename, int mono = 0);//´ò¿ªÎÄ¼ş
-	int write_file(char* filename);//Ğ´³öÎÄ¼ş
+	int out_file(char* filename);//Ğ´³öÎÄ¼ş
 	void show(string title = "Ô¤ÀÀÔ­Í¼£¨image£©");//Ô¤ÀÀÍ¼Ïñ
 	void show_fdomain(string title = "Ô¤ÀÀÆµÓòÍ¼£¨fdomain£©");//Ô¤ÀÀÆµÓòÍ¼Ïñ
 	void show_eo(string title = "ÆæÅ¼Í¼Ïñ", int rgb = 3);//Ô¤ÀÀÆµÓòÍ¼Ïñ
@@ -46,6 +46,15 @@ public:
 	void eo_write_mask(Mat& mask, int rgb = 3, int auto_size = 0);
 	void eo_write_file(char* info_file);
 	void eo_out_file(char* out_file);
+
+	void lsb_write_file(char* info_file);
+	void lsb_out_file(char* info_file);
+	unsigned long lsb_get_max();
+	int lsb_get_deep(char* file);
+
+
+
+
 
 
 

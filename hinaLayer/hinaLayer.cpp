@@ -12,6 +12,8 @@
 using namespace cv;
 using namespace std;
 
+
+
 //载入
 
 
@@ -39,7 +41,7 @@ int hinaLayer::open_file(char* filename, int mono)
 /// </summary>
 /// <param name="filename">写出文件名.</param>
 /// <returns>int.</returns>
-int hinaLayer::write_file(char* filename)
+int hinaLayer::out_file(char* filename)
 {
 	bool b = imwrite(filename,image);
 	if (b!=true)
@@ -357,6 +359,64 @@ void hinaLayer::eo_out_file(char* out_file)
 	void bit_f_decode(Mat& image, char* filename);
 	bit_f_decode(image, out_file);
 
+}
+
+void hinaLayer::lsb_write_file(char* info_file)
+{
+	void bit_f_write_A(char* filename, Mat& image);
+	bit_f_write_A(info_file, image);
+}
+
+void hinaLayer::lsb_out_file(char* info_file)
+{
+	void bit_f_decode_A(Mat& image, char* filename);
+	bit_f_decode_A(image, info_file);
+}
+
+unsigned long hinaLayer::lsb_get_max()
+{
+	int nl = image.rows; // number of lines  
+	int nc = image.cols; // number of columns  
+
+	unsigned long  pxbit = nl*nc * 3;
+	return pxbit;
+}
+
+int hinaLayer::lsb_get_deep(char* file)
+{
+	ifstream in(file, ios::binary);
+	int tmp;//
+	char* buffer;
+	unsigned long  size;
+
+	in.seekg(0, ios::end);
+	size = in.tellg();//计算文件大小
+	in.seekg(0, ios::beg);
+
+
+	//----------------------
+	int nl = image.rows; // number of lines  
+	int nc = image.cols; // number of columns  
+
+	//预处理，计算嵌入深度2~8
+	unsigned long  pxbit = nl*nc * 3;
+	int deep = 2;
+	double f = 0;
+
+	f = (double)size / (double)((double)pxbit / 8);
+	//cout << "size:" << size << endl;
+	//cout << "pxbit/8:" << (double)pxbit / 8 << endl;
+	cout << f << endl;
+	if (((f * 1000000 - (int)f * 1000000)) > 0)
+	{
+		f = f + 1.0;
+	}
+	deep = f;
+	if (deep <= 0)deep = 8;
+	if (deep > 8)deep = 8;
+	if (deep < 2)deep = 2;
+
+	return deep;
 }
 
 
@@ -842,10 +902,7 @@ void bit_f_write(char* filename, Mat& image)
 
 void bit_f_write_A(char* filename, Mat& image)
 {
-	using namespace std;
 	ifstream in(filename, ios::binary);
-
-
 	//载入文件
 	if (!in)
 	{
@@ -855,7 +912,7 @@ void bit_f_write_A(char* filename, Mat& image)
 
 	int tmp;//
 	char* buffer;
-	long size;
+	unsigned long  size;
 
 	in.seekg(0, ios::end);
 	size = in.tellg();//计算文件大小
@@ -868,7 +925,7 @@ void bit_f_write_A(char* filename, Mat& image)
 	bitset<8> bit_temp;
 
 
-	for (int i = 0; i < size; i++)
+	for (unsigned long i = 0; i < size; i++)
 	{
 		bit = in.get();
 	}
@@ -878,7 +935,7 @@ void bit_f_write_A(char* filename, Mat& image)
 	int nc = image.cols; // number of columns  
 
 	//预处理，计算嵌入深度2~8
-	long pxbit = nl*nc * 3;
+	unsigned long  pxbit = nl*nc * 3;
 	int deep = 2;
 	double f = 0;
 
@@ -910,7 +967,7 @@ void bit_f_write_A(char* filename, Mat& image)
 
 	in.seekg(0, ios::beg);
 	bit = in.get();
-	long rrr = 0;
+	unsigned long  rrr = 0;
 	for (int j = 0; j < nl; j++) {
 		for (int i = 0; i < nc; i++)
 		{
@@ -951,8 +1008,6 @@ void bit_f_write_A(char* filename, Mat& image)
 						}
 						//if(pass<200)
 						//cout<<bit_temp<<endl;
-
-
 
 					}
 
@@ -1001,8 +1056,6 @@ void bit_f_decode_A(Mat& image, char* filename)
 				{//------------------------
 					pass++;
 
-
-
 					bit_temp = image.at<cv::Vec3b>(j, i)[p];
 
 					for (int z = 0; z < deep; z++)
@@ -1026,13 +1079,7 @@ void bit_f_decode_A(Mat& image, char* filename)
 							bit.reset(7 - cheak);
 							cheak++;
 						}
-
-
-
-
 					}
-
-
 				}
 
 			}//------------------------
