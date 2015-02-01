@@ -346,6 +346,19 @@ void hinaLayer::eo_write_mask(char* mask_file, int rgb /*= 3*/, int auto_size /*
 
 }
 
+void hinaLayer::eo_write_file(char* info_file)
+{
+	void bit_f_write(char* filename, Mat& image);
+	bit_f_write(info_file, image);
+}
+
+void hinaLayer::eo_out_file(char* out_file)
+{
+	void bit_f_decode(Mat& image, char* filename);
+	bit_f_decode(image, out_file);
+
+}
+
 
 
 
@@ -751,7 +764,6 @@ void bit_to0(Mat& in, int rgb)
 	}
 }
 
-
 void bit_f_write(char* filename, Mat& image)
 {
 	ifstream in(filename, ios::binary);
@@ -954,6 +966,132 @@ void bit_f_write_A(char* filename, Mat& image)
 	cout << rrr;
 }
 
+void bit_f_decode_A(Mat& image, char* filename)
+{
+	using namespace std;
 
+	int nl = image.rows; // number of lines  
+	int nc = image.cols; // number of columns  
+
+	ofstream in(filename, ios::binary);
+	int cheak = 0;
+	int pass = 0;
+
+	bitset<8> bit(0);
+	bitset<8> bit_temp(0);
+	in.seekp(0, ios::beg);
+
+	int deep;//判断深度
+
+	deep = image.at<cv::Vec3b>(0, 0)[0];
+	deep = deep % 100 % 10 + 2;
+
+	if (deep > 8)deep = 8;
+	cout << "判断深度:" << deep;
+
+
+	char t;
+	for (int j = 0; j < nl; j++)
+	{
+		for (int i = 0; i < nc; i++)
+		{
+			if (i + j > 0)
+			{
+				for (int p = 0; p < 3; p++)
+				{//------------------------
+					pass++;
+
+
+
+					bit_temp = image.at<cv::Vec3b>(j, i)[p];
+
+					for (int z = 0; z < deep; z++)
+					{
+						if (cheak == 8)
+						{
+							t = (char)bit.to_ulong();
+							in.put(t);
+							cheak = 0;
+							bit.reset();
+						}
+
+
+						if (bit_temp.test(z) == 1)
+						{
+							bit.set(7 - cheak);
+							cheak++;
+						}
+						else
+						{
+							bit.reset(7 - cheak);
+							cheak++;
+						}
+
+
+
+
+					}
+
+
+				}
+
+			}//------------------------
+		}
+	}
+
+
+	in.close();
+
+}
+
+void bit_f_decode(Mat& image, char* filename)
+{
+
+	int nl = image.rows; // number of lines  
+	int nc = image.cols; // number of columns  
+
+	ofstream in(filename, ios::binary);
+	int cheak = 0;
+	int pass = 0;
+
+	bitset<8> bit(0);
+	in.seekp(0, ios::beg);
+	char t;
+	for (int j = 0; j < nl; j++) {
+		for (int i = 0; i < nc; i++)
+		{
+			for (int p = 0; p < 3; p++)
+			{
+				if (cheak == 8)
+				{
+					t = (char)bit.to_ulong();
+					in.put(t);
+					cheak = 0;
+					bit.reset();
+				}
+
+				pass++;
+				//if(pass<100)
+				//cout<<(int)(image.at<cv::Vec3b>(j,i)[p]&1)<<",";
+
+				if ((image.at<cv::Vec3b>(j, i)[p] & 1) == 1)
+				{
+					bit.set(7 - cheak);
+					cheak++;
+				}
+				else
+				{
+					bit.reset(7 - cheak);
+					cheak++;
+				}
+
+			}
+
+		}
+	}
+
+	in.close();
+
+}
 
 

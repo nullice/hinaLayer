@@ -17,6 +17,10 @@ int main()
 	j.show("打开文件");
 	j.eo_write_mask("aaa.png");
 	j.show_eo("写入奇偶水印");
+
+	j.eo_write_file("info.txt");
+	j.eo_out_file("1.txt");
+
 	/*
 	j.dtf_make(2);
 	j.dtf_write_mask("pp2.png",2);

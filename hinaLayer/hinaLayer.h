@@ -44,6 +44,8 @@ public:
 	void eo_to_image(int rgb = 3);
 	void eo_write_mask(char* mask_file, int rgb = 3, int auto_size = 0);
 	void eo_write_mask(Mat& mask, int rgb = 3, int auto_size = 0);
+	void eo_write_file(char* info_file);
+	void eo_out_file(char* out_file);
 
 
 
