@@ -22,7 +22,7 @@ using namespace std;
 /// <param name="filename">要打开的图像文件名.</param>
 /// <param name="mono">是否打开作为单色图像，0为彩色，1为单色，缺省为0.</param>
 /// <returns>返回0打开文件失败</returns>
-int hinaLayer::openfile(char* filename, int mono)
+int hinaLayer::open_file(char* filename, int mono)
 {
 	image = imread(filename,(mono==1)?0:1);
 	if(image.empty())
@@ -39,7 +39,7 @@ int hinaLayer::openfile(char* filename, int mono)
 /// </summary>
 /// <param name="filename">写出文件名.</param>
 /// <returns>int.</returns>
-int hinaLayer::writefile(char* filename)
+int hinaLayer::write_file(char* filename)
 {
 	bool b = imwrite(filename,image);
 	if (b!=true)
@@ -68,17 +68,31 @@ void hinaLayer::resize(int w,int h)
 /// <summary>
 /// 在一个窗口中显示当前 hinaLayer 图像.
 /// </summary>
-void hinaLayer::show()
-{
-	imshow("预览原图（image）", image);
+void hinaLayer::show(string title)
+{ 
+
+	imshow(title, image);
 	waitKey(0);
 }
 
 
-void hinaLayer::show_fdomain()
+void hinaLayer::show_fdomain(string title)
 {
-	imshow("预览频域图（fdomain）", fdomain);
+	imshow(title, fdomain);
 	waitKey(0);
+}
+
+void hinaLayer::show_eo(string title, int rgb /*= 3*/)
+{
+	void eo_decode(Mat& imageROI, int rgb);
+
+	Mat temp;
+	image.copyTo(temp);
+	eo_decode(temp, rgb);
+
+	imshow(title + " [" + to_string(rgb) + "]", temp);
+	waitKey(0);
+
 }
 
 
@@ -161,6 +175,8 @@ int hinaLayer::dtf_inverse_make(int rgb /*= 3*/)
 		idft(mmat[rgb], mmat[rgb]);
 		show_idft(mmat[rgb], image, mmat[rgb]);
 	}
+	
+	dtf_to_image(3);
 	return 0;
 }
 
@@ -234,26 +250,111 @@ void hinaLayer::dtf_to_image(int rgb)
 
 int hinaLayer::dtf_write_mask(Mat& mask, int rgb /*= 3*/)
 {
+	void writeINFO(Mat& in, Mat& info);
 	Mat temp[3];
 	if (3 == rgb)
 	{
 		for (int i = 0; i < 3; i++)
 		{
-			void writeINFO(Mat& in, char* info_f);
-			writeINFO(mmat[i],);
 			
+			writeINFO(mmat[i],mask);
 		}
-		merge(temp, 3, image);
 	}
 	else
 	{
-		mmat[rgb].convertTo(image, image.type(), 255);
+		writeINFO(mmat[rgb], mask);
 	}
+}
+
+int hinaLayer::dtf_write_mask(char* mask_file, int rgb /*= 3*/)
+{
+	void writeINFO(Mat& in, char* info_f);
+	Mat temp[3];
+	if (3 == rgb)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+
+			writeINFO(mmat[i], mask_file);
+		}
+	}
+	else
+	{
+		writeINFO(mmat[rgb], mask_file);
+		
+	}
+	return 0;
+}
+
+void hinaLayer::eo_to_image(int rgb /*= 3*/)
+{
+	void eo_decode(Mat& imageROI, int rgb);
+	eo_decode(image, rgb);
 }
 
 
 
-//openCV 操作-----------------------------------
+
+
+
+
+
+void hinaLayer::eo_write_mask(Mat& mask, int rgb /*= 3*/, int auto_size /*= 0*/)
+{
+	void eo_writeINFO(Mat& in, Mat& info, int rgb);
+	void eo_writeINFO_org(Mat& in, Mat& info, int rgb);
+	void eo_to0(Mat& in, int rgb);
+
+
+	Mat info;
+	mask.copyTo(info);
+	normalize(info, info, 0, 1, CV_MINMAX);
+
+	if (3 == rgb)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			eo_to0(image, i);
+			if (0 == auto_size)
+				eo_writeINFO_org(image, info, i);
+			else
+				eo_writeINFO(image, info, i);
+			
+		}
+	}
+	else
+	{
+		eo_to0(image, rgb);
+
+		if (0 == auto_size)
+			eo_writeINFO_org(image, info, rgb);
+		else
+			eo_writeINFO(image, info, rgb);
+	}
+}
+
+
+void hinaLayer::eo_write_mask(char* mask_file, int rgb /*= 3*/, int auto_size /*= 0*/)
+{
+	void eo_writeINFO(Mat& in, Mat& info, int rgb);
+	void eo_to0(Mat& in, int rgb);
+
+	Mat info = imread(mask_file);
+
+	eo_write_mask(info, rgb, auto_size);
+
+
+}
+
+
+
+
+
+
+
+
+
+//openCV 操作----------------------------------------------------------------------------------------
 void make_mmat(Mat& in, Mat& out) //预处理，把输入图像转换为能进行DFT的中间矩阵,输入&in,输出&out
 {
 	//实数部分	
@@ -417,11 +518,58 @@ void writeMx(Mat& in, Mat& info)
 }
 
 
+int eo_wbool(int in)//奇偶
+{
+	in = in + 1;
+	return in;
+}
+
+int eo_bool(int in)//奇偶验证
+{
+	if ((in & 1) == 1)
+		return 1;
+	else
+		return 0;
+}
+
+void eo_decode(Mat& imageROI, int rgb)
+{
+	int dot = 0;
+	for (int j = 0; j < imageROI.cols; j++)//按照图像布局打印数值
+	{
+		for (int i = 0; i < imageROI.rows; i++)
+		{
+			dot = imageROI.at<cv::Vec3b>(i, j)[rgb];
+
+			if (eo_bool(dot) == 1)
+			{
+				imageROI.at<cv::Vec3b>(i, j)[0] = 255;
+				imageROI.at<cv::Vec3b>(i, j)[1] = 255;
+				imageROI.at<cv::Vec3b>(i, j)[2] = 255;
+			}
+			else
+			{
+				imageROI.at<cv::Vec3b>(i, j)[0] = 0;
+				imageROI.at<cv::Vec3b>(i, j)[1] = 0;
+				imageROI.at<cv::Vec3b>(i, j)[2] = 0;
+			}
+		}
+	}
+}
+
+void eo_outbitimg(Mat& in, int rgb)
+{
+	Mat imageROI;
+	in.copyTo(imageROI);
+	imshow("原图", imageROI);
+	eo_decode(imageROI, rgb);
+	imshow("解码", imageROI);
+	waitKey(0);
+}
 
 
 void writeINFO(Mat& in, Mat& info)
 {	
-
 	normalize(info, info, 0, 1, CV_MINMAX);
 
 	Mat imageROI;
@@ -447,9 +595,6 @@ void writeINFO(Mat& in, Mat& info)
 
 	writeMx(imageROI, info);
 
-	//std::cout<<(int)info.rows<<"="<<info.cols<<std::endl;
-	//std::cout<<(int)q3.rows<<"="<<q3.cols<<std::endl;
-	//imageROI = q0(Rect(q0.rows - info.rows,q0.cols-info.cols,info.rows,info.cols));  
 	imageROI = q0(Rect(q0.cols - info.cols, q0.rows - info.rows, info.rows, info.cols));
 	Mat a, b;
 
@@ -467,23 +612,347 @@ void writeINFO(Mat& in, char* info_f)
 }
 
 
+void eo_to0(Mat& in, int rgb)
+{
+	int dot = 0;
+	for (int j = 0; j<in.cols; j++)
+	{
+		for (int i = 0; i<in.rows; i++)
+		{
+			dot = in.at<cv::Vec3b>(i, j)[rgb];
+			//到单数
+			if ((dot & 1) == 1)
+			{
+				if (dot >= 255)
+					dot = 254;
+				else
+					dot = dot + 1;
+			}
+			in.at<cv::Vec3b>(i, j)[rgb] = dot;
+		}
+	}
+}
+
+
+void eo_writeINFO(Mat& in, Mat& info, int rgb)
+{
+	//改变Info大小
+	int llong = 0;
+	if (in.rows <= in.cols)
+		llong = in.rows;
+	else
+		llong = in.cols;
+
+	int neww = 0, newh = 0;
+
+	if (info.rows >= info.cols)
+	{
+		neww = llong*0.8;
+		newh = neww * info.cols / info.rows;
+	}
+	else
+	{
+		newh = llong*0.8;
+		neww = newh*info.rows / info.cols;
+	}
+
+	if (newh >= info.rows * 2)
+	{
+		Mat big(neww, newh, info.type());
+		resize(info, big, big.size(), 0, 0, CV_INTER_NN);
+		big.copyTo(info);
+	}
+
+	//改变Info大小=============
+	int w = (in.rows - info.rows) / 4;
+	int h = (in.cols - info.cols) / 2;
+
+	Mat imageROI(in, Rect(h, w, info.cols, info.rows));
+
+	int dot = 0;
+	int scr = 0;
+
+
+	int min_rows, min_cols;
+	min_rows = (in.rows <= info.rows) ? in.rows : info.rows;//列j
+	min_cols = (in.cols <= info.cols) ? in.cols : info.cols;//行i
+
+	for (int j = 0; j < imageROI.rows; j++)//按照图像布局打印数值
+	{
+		for (int i = 0; i < imageROI.cols; i++)
+		{
+				dot = info.at<cv::Vec3b>(j, i)[rgb];
+				scr = imageROI.at<cv::Vec3b>(j, i)[rgb];
+			
+				if (dot > 0)
+				{
+					scr = eo_wbool(scr);
+				}
+
+				imageROI.at<cv::Vec3b>(j, i)[rgb] = scr;
+		}
+	}
+}
+
+void eo_writeINFO_org(Mat& in, Mat& info, int rgb)
+{
+	int dot = 0;
+	int scr = 0;
+
+
+	int min_rows, min_cols;
+	min_rows = (in.rows <= info.rows) ? in.rows : info.rows;//列j
+	min_cols = (in.cols <= info.cols) ? in.cols : info.cols;//行i
+	cout <<endl<< min_rows << endl << min_cols;
+
+	for (int j = 0; j < min_rows; j++)//按照图像布局打印数值
+	{
+		for (int i = 0; i <min_cols; i++)
+		{
+			//cout << endl << i << "<" << min_cols;
+
+				dot = info.at<cv::Vec3b>(j, i)[rgb];
+				scr = in.at<cv::Vec3b>(j, i)[rgb];
+				
+				if (dot > 0)
+				{
+					scr = eo_wbool(scr);
+				}
+
+				in.at<cv::Vec3b>(j, i)[rgb] = scr;
+
+		}
+	}
+}
 
 
 
 
+//bit-------
+
+void bit_to0(Mat& in, int rgb)
+{
+	int dot = 0;
+	for (int j = 0; j<in.cols; j++)
+	{
+		for (int i = 0; i<in.rows; i++)
+		{
+			dot = in.at<cv::Vec3b>(i, j)[rgb];
+			//到单数
+			if ((dot & 1) == 1)
+			{
+				if (dot >= 255)
+					dot = 254;
+				else
+					dot = dot + 1;
+			}
+			in.at<cv::Vec3b>(i, j)[rgb] = dot;
+		}
+	}
+}
+
+
+void bit_f_write(char* filename, Mat& image)
+{
+	ifstream in(filename, ios::binary);
+	if (!in)
+	{
+		cerr << "open error!" << endl;
+		abort();
+	}
+	int tmp;
+	char* buffer;
+	long size;
+
+	in.seekg(0, ios::end);
+	size = in.tellg();
+	//cout<<size<<endl;
+	in.seekg(0, ios::beg);
+
+	bitset<8> bit;
+	for (int i = 0; i < size; i++)
+	{
+		bit = in.get();
+
+	}
+	//----------------------
+	int nl = image.rows; // number of lines  
+	int nc = image.cols; // number of columns  
+	bit_to0(image, 0);
+	bit_to0(image, 1);
+	bit_to0(image, 2);
 
 
 
+	int cheak = 0;
+	int pass = 0;
+
+	in.seekg(0, ios::beg);
+	bit = in.get();
+
+	for (int j = 0; j < nl; j++) {
+		for (int i = 0; i < nc; i++)
+		{
 
 
 
+			if (pass <= size)
+			{
+				for (int p = 0; p < 3; p++)
+				{
+					if (cheak == 8)
+					{
+						//cout<<bit<<"<";
+						bit = in.get();
+						pass++;
+						cheak = 0;
+					}
+
+
+					//cout<<(int)(image.at<cv::Vec3b>(j,i)[p]&1)<<"->";
+					if (bit.test(7 - cheak) == 1)
+					{
+						image.at<cv::Vec3b>(j, i)[p] = image.at<cv::Vec3b>(j, i)[p] + 1;
+
+					}
+					//cout<<(int)(image.at<cv::Vec3b>(j,i)[p]&1)
+					//<<"="<<bit.test(cheak)
+					//<<",";
+
+					cheak++;
+				}
+			}
+
+
+		}
+	}
+}
+
+void bit_f_write_A(char* filename, Mat& image)
+{
+	using namespace std;
+	ifstream in(filename, ios::binary);
+
+
+	//载入文件
+	if (!in)
+	{
+		cerr << "open error!" << endl;
+		abort();
+	}
+
+	int tmp;//
+	char* buffer;
+	long size;
+
+	in.seekg(0, ios::end);
+	size = in.tellg();//计算文件大小
+	//cout<<size<<endl;
+	in.seekg(0, ios::beg);
 
 
 
+	bitset<8> bit;
+	bitset<8> bit_temp;
+
+
+	for (int i = 0; i < size; i++)
+	{
+		bit = in.get();
+	}
+
+	//----------------------
+	int nl = image.rows; // number of lines  
+	int nc = image.cols; // number of columns  
+
+	//预处理，计算嵌入深度2~8
+	long pxbit = nl*nc * 3;
+	int deep = 2;
+	double f = 0;
+
+	f = (double)size / (double)((double)pxbit / 8);
+	cout << "size:" << size << endl;
+	cout << "pxbit/8:" << (double)pxbit / 8 << endl;
+
+	cout << f << endl;
+	if (((f * 1000000 - (int)f * 1000000)) > 0)
+	{
+		f = f + 1.0;
+	}
+
+	deep = f;
+	if (deep <= 0)deep = 8;
+	if (deep > 8)deep = 8;
+	if (deep < 2)deep = 2;
+
+	cout << "计算深度：" << deep << endl;
+
+	//写入嵌入深度
+	int i = image.at<cv::Vec3b>(0, 0)[0];
+	if (i >= 250 || deep == 8) i = i - 10;
+	image.at<cv::Vec3b>(0, 0)[0] = i - i % 100 % 10 + deep - 2;
+
+
+	int cheak = 0;
+	int pass = 0;
+
+	in.seekg(0, ios::beg);
+	bit = in.get();
+	long rrr = 0;
+	for (int j = 0; j < nl; j++) {
+		for (int i = 0; i < nc; i++)
+		{
+
+			if (pass <= size && (j + i > 0))
+			{
+				for (int p = 0; p < 3; p++)
+				{//--------------------------------------------
+
+					bit_temp = image.at<cv::Vec3b>(j, i)[p];
+					//if(pass<200)
+					//cout<<"-------\n";
+					for (int z = 0; z < deep; z++)
+					{
+						if (cheak == 8)
+						{
+							//	if(pass<200)
+							//cout<<"=============\n";
+							bit = in.get();
+							pass++;
+							cheak = 0;
+						}
+						//if(pass<200)
+						//cout<<"bit="<<bit<<">temp="<<bit_temp<<"<"<<cheak<<":"<<bit.test(7-cheak)<<">";
 
 
 
+						if (bit.test(7 - cheak) == 1)
+						{
+							bit_temp.set(z);
+							cheak++;
+						}
+						else
+						{
+							bit_temp.reset(z);
+							cheak++;
 
+						}
+						//if(pass<200)
+						//cout<<bit_temp<<endl;
+
+
+
+					}
+
+					image.at<cv::Vec3b>(j, i)[p] = bit_temp.to_ulong();
+
+				}//--------------------------------------------
+			}
+
+		}
+	}
+	cout << rrr;
+}
 
 
 
