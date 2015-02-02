@@ -28,21 +28,58 @@
 //resize in_f out_f w h
 
 
-int eo_en_mask(char* in_file, char* mask_file, char* out_file, int rgb)
+
+
+int en_eo_mask(char* in_file, char* mask_file, char* out_file, int rgb)
 {
 	hinaLayer h;
 	h.open_file(in_file);
 	h.eo_write_mask(mask_file, rgb);
 	h.out_file(out_file);
+	return 0;
 }
 
-int eo_de_mask(char* in_file, char* out_file, int rgb)
+int en_eo_file(char* in_file, char* info_file, char* out_file, int rgb)
 {
 	hinaLayer h;
 	h.open_file(in_file);
-	h.eo_out_file(out_file);
+	h.eo_write_file(info_file, rgb);
 	h.out_file(out_file);
+	return 0;
 }
 
+
+int de_eo_mask(char* in_file, char* out_file, int rgb)
+{
+	hinaLayer h;
+	h.open_file(in_file);
+	h.eo_to_image(rgb);
+	h.out_file(out_file);
+	return 0;
+}
+
+
+int de_eo_file(char* in_file, char* out_file, int rgb)
+{
+	hinaLayer h;
+	h.open_file(in_file);
+	h.eo_out_file(out_file, rgb);
+	return 0;
+}
+
+
+
+
+
+int main()
+{
+	//en_eo_mask("test\\rr.jpg", "test\aaa.png", "test\out.png",2);
+	//de_eo_mask("test\out.png", "test\out2.png", 3);
+	//cout<<"ÆæÅ¼Î»Ð´ÈëË®Ó¡²âÊÔ"
+
+	en_eo_file("test\\rr.jpg", "test\\test.txt", "test\\out.png", 3);
+	de_eo_file("test\\out.png", "test\\out2.txt", 3);
+
+}
 
 
