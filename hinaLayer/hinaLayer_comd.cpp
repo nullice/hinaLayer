@@ -110,22 +110,58 @@ int de_dtf_mask(char* in_file, char* out_file, int rgb)
 }
 
 
+
+void resize(char* in_file, char* out_file, int w, int h)
+{
+	hinaLayer hl;
+	hl.open_file(in_file);
+	hl.resize(w, h);
+	hl.out_file(out_file);
+}
+
+
+void mirrorY(char* in_file, char* out_file)
+{
+	hinaLayer hl;
+	hl.open_file(in_file);
+	hl.mirrorY();
+	hl.out_file(out_file);
+}
+
+void mirrorX(char* in_file, char* out_file)
+{
+	hinaLayer hl;
+	hl.open_file(in_file);
+	hl.mirrorX();
+	hl.out_file(out_file);
+}
+
+
+
 int main()
 {
 	//en_eo_mask("test\\rr.jpg", "test\aaa.png", "test\out.png",2);
 	//de_eo_mask("test\out.png", "test\out2.png", 3);
-	//cout<<"ÆæÅ¼Î»Ð´ÈëË®Ó¡²âÊÔ"
+	//std::cout<<"ÆæÅ¼Î»Ð´ÈëË®Ó¡²âÊÔ"
 
 	//en_eo_file("test\\rr.jpg", "test\\test.txt", "test\\out.png", 3);
 	//de_eo_file("test\\out.png", "test\\out2.txt", 3);
-	//cout<<"ÆæÅ¼Î»Ð´ÈëÎÄ¼þ²âÊÔ"
+	//std::cout<<"ÆæÅ¼Î»Ð´ÈëÎÄ¼þ²âÊÔ"
 
 	//en_lsb_file("test\\rr.jpg", "test\\test.txt", "test\\out.png", 3);
 	//de_lsb_file("test\\out.png", "test\\out2.txt", 3);
+	//std::cout<<"ÏñËØµÍÎ»Î»Ð´ÈëÎÄ¼þ²âÊÔ"
 
-	en_dtf_mask("test\\oo.jpg", "test\\pp2.png", "test\\out.png", 2);
-	de_dtf_mask("test\\out.png", "test\\out2.png", 3);
-	std::cout << "dtfÆµÓòÐ´ÈëË®Ó¡²âÊÔ";
+	//en_dtf_mask("test\\oo.jpg", "test\\pp2.png", "test\\out.png", 2);
+	//de_dtf_mask("test\\out.png", "test\\out2.png", 3);
+	//std::cout << "dtfÆµÓòÐ´ÈëË®Ó¡²âÊÔ";
+
+	//resize("test\\oo.jpg", "test\\out.jpg",303,230);
+	//mirrorX("test\\out.jpg", "test\\out2.jpg");
+	//mirrorY("test\\out2.jpg", "test\\out3.jpg");
+	//std::cout << "¸¨Öú¹¦ÄÜ²âÊÔ";
+
+
 
 }
 
