@@ -1,3 +1,16 @@
+// ***********************************************************************
+// Assembly         : 
+// Author           : 语冰
+// Created          : 01-28-2015
+//
+// Last Modified By : 语冰
+// Last Modified On : 02-02-2015
+// ***********************************************************************
+// <copyright file="hinaLayer.cpp" company="">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 #include "hinaLayer.h"
 #include <iostream>
 #include <string>
@@ -70,6 +83,7 @@ void hinaLayer::resize(int w,int h)
 /// <summary>
 /// 在一个窗口中显示当前 hinaLayer 图像.
 /// </summary>
+/// <param name="title">The title.</param>
 void hinaLayer::show(string title)
 { 
 
@@ -78,12 +92,21 @@ void hinaLayer::show(string title)
 }
 
 
+/// <summary>
+/// Show_fdomains the specified title.
+/// </summary>
+/// <param name="title">The title.</param>
 void hinaLayer::show_fdomain(string title)
 {
 	imshow(title, fdomain);
 	waitKey(0);
 }
 
+/// <summary>
+/// Show_eoes the specified title.
+/// </summary>
+/// <param name="title">The title.</param>
+/// <param name="rgb">The RGB.</param>
 void hinaLayer::show_eo(string title, int rgb /*= 3*/)
 {
 	void eo_decode(Mat& imageROI, int rgb);
@@ -244,6 +267,10 @@ void hinaLayer::dtf_mmat_n2c(int rgb /*= 3*/)
 }
 
 
+/// <summary>
+/// Dtf_to_images the specified RGB.
+/// </summary>
+/// <param name="rgb">The RGB.</param>
 void hinaLayer::dtf_to_image(int rgb)
 {
 	Mat temp[3];
@@ -261,6 +288,12 @@ void hinaLayer::dtf_to_image(int rgb)
 	}
 }
 
+/// <summary>
+/// Dtf_write_masks the specified mask.
+/// </summary>
+/// <param name="mask">The mask.</param>
+/// <param name="rgb">The RGB.</param>
+/// <returns>int.</returns>
 int hinaLayer::dtf_write_mask(Mat& mask, int rgb /*= 3*/)
 {
 	void writeINFO(Mat& in, Mat& info);
@@ -279,6 +312,12 @@ int hinaLayer::dtf_write_mask(Mat& mask, int rgb /*= 3*/)
 	}
 }
 
+/// <summary>
+/// Dtf_write_masks the specified mask_file.
+/// </summary>
+/// <param name="mask_file">The mask_file.</param>
+/// <param name="rgb">The RGB.</param>
+/// <returns>int.</returns>
 int hinaLayer::dtf_write_mask(char* mask_file, int rgb /*= 3*/)
 {
 	void writeINFO(Mat& in, char* info_f);
@@ -299,6 +338,10 @@ int hinaLayer::dtf_write_mask(char* mask_file, int rgb /*= 3*/)
 	return 0;
 }
 
+/// <summary>
+/// Eo_to_images the specified RGB.
+/// </summary>
+/// <param name="rgb">The RGB.</param>
 void hinaLayer::eo_to_image(int rgb /*= 3*/)
 {
 	void eo_decode(Mat& imageROI, int rgb);
@@ -326,6 +369,12 @@ void hinaLayer::eo_to_image(int rgb /*= 3*/)
 
 
 
+/// <summary>
+/// Eo_write_masks the specified mask.
+/// </summary>
+/// <param name="mask">The mask.</param>
+/// <param name="rgb">The RGB.</param>
+/// <param name="auto_size">The auto_size.</param>
 void hinaLayer::eo_write_mask(Mat& mask, int rgb /*= 3*/, int auto_size /*= 0*/)
 {
 	void eo_writeINFO(Mat& in, Mat& info, int rgb);
@@ -361,6 +410,12 @@ void hinaLayer::eo_write_mask(Mat& mask, int rgb /*= 3*/, int auto_size /*= 0*/)
 }
 
 
+/// <summary>
+/// Eo_write_masks the specified mask_file.
+/// </summary>
+/// <param name="mask_file">The mask_file.</param>
+/// <param name="rgb">The RGB.</param>
+/// <param name="auto_size">The auto_size.</param>
 void hinaLayer::eo_write_mask(char* mask_file, int rgb /*= 3*/, int auto_size /*= 0*/)
 {
 	void eo_writeINFO(Mat& in, Mat& info, int rgb);
@@ -373,41 +428,73 @@ void hinaLayer::eo_write_mask(char* mask_file, int rgb /*= 3*/, int auto_size /*
 
 }
 
-void hinaLayer::eo_write_file(char* info_file)
+/// <summary>
+/// Eo_write_files the specified info_file.
+/// </summary>
+/// <param name="info_file">The info_file.</param>
+void hinaLayer::eo_write_file(char* info_file, int rgb)
 {
-	void bit_f_write(char* filename, Mat& image);
-	bit_f_write(info_file, image);
+	void bit_f_write(char* filename, Mat& image, int rgb = 3);
+	bit_f_write(info_file, image, rgb);
 }
 
-void hinaLayer::eo_out_file(char* out_file)
+/// <summary>
+/// Eo_out_files the specified out_file.
+/// </summary>
+/// <param name="out_file">The out_file.</param>
+void hinaLayer::eo_out_file(char* out_file, int rgb)
 {
-	void bit_f_decode(Mat& image, char* filename);
-	bit_f_decode(image, out_file);
+	void bit_f_decode(Mat& image, char* filename, int rgb = 3);
+	bit_f_decode(image, out_file, rgb);
 
 }
 
-void hinaLayer::lsb_write_file(char* info_file)
+/// <summary>
+/// Lsb_write_files the specified info_file.
+/// </summary>
+/// <param name="info_file">The info_file.</param>
+void hinaLayer::lsb_write_file(char* info_file, int rgb)
 {
-	void bit_f_write_A(char* filename, Mat& image);
-	bit_f_write_A(info_file, image);
+	void bit_f_write_A(char* filename, Mat& image, int rgb = 3);
+	bit_f_write_A(info_file, image, rgb);
 }
 
-void hinaLayer::lsb_out_file(char* info_file,int en_deep)
+/// <summary>
+/// Lsb_out_files the specified info_file.
+/// </summary>
+/// <param name="info_file">The info_file.</param>
+/// <param name="en_deep">The en_deep.</param>
+void hinaLayer::lsb_out_file(char* info_file, int rgb, int en_deep)
 {
-	void bit_f_decode_A(Mat& image, char* filename, int en_deep = 0);
-	bit_f_decode_A(image, info_file, en_deep);
+	void bit_f_decode_A(Mat& image, char* filename, int rgb, int en_deep = 0);
+	bit_f_decode_A(image, info_file, rgb, en_deep);
 }
 
-unsigned long hinaLayer::lsb_get_max()
+/// <summary>
+/// Lsb_get_maxes this instance.
+/// </summary>
+/// <returns>unsigned long.</returns>
+unsigned long hinaLayer::lsb_get_max(int rgb)
 {
 	int nl = image.rows; // number of lines  
 	int nc = image.cols; // number of columns  
+	
+	unsigned long  pxbit;
 
-	unsigned long  pxbit = nl*nc * 3;
+	if (3 == rgb)
+		pxbit = nl*nc * 3;
+	else
+		pxbit = nl*nc * 1;
+
 	return pxbit;
 }
 
-int hinaLayer::lsb_get_deep(char* file)
+/// <summary>
+/// Lsb_get_deeps the specified file.
+/// </summary>
+/// <param name="file">The file.</param>
+/// <returns>int.</returns>
+int hinaLayer::lsb_get_deep(char* file, int rgb)
 {
 	ifstream in(file, ios::binary);
 	int tmp;//
@@ -424,14 +511,17 @@ int hinaLayer::lsb_get_deep(char* file)
 	int nc = image.cols; // number of columns  
 
 	//预处理，计算嵌入深度2~8
-	unsigned long  pxbit = nl*nc * 3;
 	int deep = 2;
 	double f = 0;
+	unsigned long  pxbit;
+	if (3 == rgb)
+		pxbit = nl*nc * 3;
+	else
+		pxbit = nl*nc * 1;
+
 
 	f = (double)size / (double)((double)pxbit / 8);
-	//cout << "size:" << size << endl;
-	//cout << "pxbit/8:" << (double)pxbit / 8 << endl;
-	cout << f << endl;
+	//_DEBUG cout << f << endl;
 	if (((f * 1000000 - (int)f * 1000000)) > 0)
 	{
 		f = f + 1.0;
@@ -455,6 +545,11 @@ int hinaLayer::lsb_get_deep(char* file)
 
 
 //openCV 操作==============================================================================================================================
+/// <summary>
+/// Make_mmats the specified in.
+/// </summary>
+/// <param name="in">The in.</param>
+/// <param name="out">The out.</param>
 void make_mmat(Mat& in, Mat& out) //预处理，把输入图像转换为能进行DFT的中间矩阵,输入&in,输出&out
 {
 	//实数部分	
@@ -475,6 +570,11 @@ void make_mmat(Mat& in, Mat& out) //预处理，把输入图像转换为能进行DFT的中间矩阵,
 }
 
 
+/// <summary>
+/// Show_dfts the specified in.
+/// </summary>
+/// <param name="in">The in.</param>
+/// <param name="out">The out.</param>
 void show_dft(Mat& in, Mat& out)//让dft转换后的Mat可视化（变为0~1的矩阵）
 {
 
@@ -497,6 +597,10 @@ void show_dft(Mat& in, Mat& out)//让dft转换后的Mat可视化（变为0~1的矩阵）
 }
 
 
+/// <summary>
+/// Mat_n2cs the specified in.
+/// </summary>
+/// <param name="in">The in.</param>
 void mat_n2c(Mat& in){
 	/*
 	* +----+----+    +----+----+
@@ -535,6 +639,12 @@ void mat_n2c(Mat& in){
 
 
 
+/// <summary>
+/// Show_idfts the specified in.
+/// </summary>
+/// <param name="in">The in.</param>
+/// <param name="origin">The origin.</param>
+/// <param name="out">The out.</param>
 void show_idft(const Mat& in, const Mat& origin, Mat& out)//in 输入idft 后的矩阵（mmat）,origin 原图 用来取得图像大小 剪掉预处理扩展的边界，out 输出
 {
 
@@ -606,6 +716,11 @@ void MirrorX(const Mat &in, Mat &out)
 }
 
 
+/// <summary>
+/// Writes the mx.
+/// </summary>
+/// <param name="in">The in.</param>
+/// <param name="info">The information.</param>
 void writeMx(Mat& in, Mat& info)
 {
 	for (int j = 0; j < info.rows; j++)//按照图像布局打印数值
@@ -618,12 +733,22 @@ void writeMx(Mat& in, Mat& info)
 }
 
 
+/// <summary>
+/// Eo_wbools the specified in.
+/// </summary>
+/// <param name="in">The in.</param>
+/// <returns>int.</returns>
 int eo_wbool(int in)//奇偶
 {
 	in = in + 1;
 	return in;
 }
 
+/// <summary>
+/// Eo_bools the specified in.
+/// </summary>
+/// <param name="in">The in.</param>
+/// <returns>int.</returns>
 int eo_bool(int in)//奇偶验证
 {
 	if ((in & 1) == 1)
@@ -632,6 +757,11 @@ int eo_bool(int in)//奇偶验证
 		return 0;
 }
 
+/// <summary>
+/// Eo_decodes the specified image roi.
+/// </summary>
+/// <param name="imageROI">The image roi.</param>
+/// <param name="rgb">The RGB.</param>
 void eo_decode(Mat& imageROI, int rgb)
 {
 	int dot = 0;
@@ -669,6 +799,11 @@ void eo_decode(Mat& imageROI, int rgb)
 	}
 }
 
+/// <summary>
+/// Eo_outbitimgs the specified in.
+/// </summary>
+/// <param name="in">The in.</param>
+/// <param name="rgb">The RGB.</param>
 void eo_outbitimg(Mat& in, int rgb)
 {
 	Mat imageROI;
@@ -680,6 +815,11 @@ void eo_outbitimg(Mat& in, int rgb)
 }
 
 
+/// <summary>
+/// Writes the information.
+/// </summary>
+/// <param name="in">The in.</param>
+/// <param name="info">The information.</param>
 void writeINFO(Mat& in, Mat& info)
 {	
 	normalize(info, info, 0, 1, CV_MINMAX);
@@ -716,6 +856,11 @@ void writeINFO(Mat& in, Mat& info)
 
 }
 
+/// <summary>
+/// Writes the information.
+/// </summary>
+/// <param name="in">The in.</param>
+/// <param name="info_f">The info_f.</param>
 void writeINFO(Mat& in, char* info_f)
 {
 	//获取最大值最小值
@@ -724,6 +869,11 @@ void writeINFO(Mat& in, char* info_f)
 }
 
 
+/// <summary>
+/// Eo_to0s the specified in.
+/// </summary>
+/// <param name="in">The in.</param>
+/// <param name="rgb">The RGB.</param>
 void eo_to0(Mat& in, int rgb)
 {
 	int dot = 0;
@@ -746,6 +896,12 @@ void eo_to0(Mat& in, int rgb)
 }
 
 
+/// <summary>
+/// Eo_writes the information.
+/// </summary>
+/// <param name="in">The in.</param>
+/// <param name="info">The information.</param>
+/// <param name="rgb">The RGB.</param>
 void eo_writeINFO(Mat& in, Mat& info, int rgb)
 {
 	//改变Info大小
@@ -806,6 +962,12 @@ void eo_writeINFO(Mat& in, Mat& info, int rgb)
 	}
 }
 
+/// <summary>
+/// Eo_writes the inf o_org.
+/// </summary>
+/// <param name="in">The in.</param>
+/// <param name="info">The information.</param>
+/// <param name="rgb">The RGB.</param>
 void eo_writeINFO_org(Mat& in, Mat& info, int rgb)
 {
 	int dot = 0;
@@ -815,7 +977,7 @@ void eo_writeINFO_org(Mat& in, Mat& info, int rgb)
 	int min_rows, min_cols;
 	min_rows = (in.rows <= info.rows) ? in.rows : info.rows;//列j
 	min_cols = (in.cols <= info.cols) ? in.cols : info.cols;//行i
-	cout <<endl<< min_rows << endl << min_cols;
+	//_DEBUG cout <<endl<< min_rows << endl << min_cols;
 
 	for (int j = 0; j < min_rows; j++)//按照图像布局打印数值
 	{
@@ -842,6 +1004,11 @@ void eo_writeINFO_org(Mat& in, Mat& info, int rgb)
 
 //bit-------
 
+/// <summary>
+/// Bit_to0s the specified in.
+/// </summary>
+/// <param name="in">The in.</param>
+/// <param name="rgb">The RGB.</param>
 void bit_to0(Mat& in, int rgb)
 {
 	int dot = 0;
@@ -863,7 +1030,12 @@ void bit_to0(Mat& in, int rgb)
 	}
 }
 
-void bit_f_write(char* filename, Mat& image)
+/// <summary>
+/// Bit_f_writes the specified filename.
+/// </summary>
+/// <param name="filename">The filename.</param>
+/// <param name="image">The image.</param>
+void bit_f_write(char* filename, Mat& image, int rgb)
 {
 	ifstream in(filename, ios::binary);
 	if (!in)
@@ -905,32 +1077,32 @@ void bit_f_write(char* filename, Mat& image)
 		for (int i = 0; i < nc; i++)
 		{
 
-
-
 			if (pass <= size)
 			{
 				for (int p = 0; p < 3; p++)
 				{
-					if (cheak == 8)
+					if ((3 == rgb) || (rgb == p))
 					{
-						//cout<<bit<<"<";
-						bit = in.get();
-						pass++;
-						cheak = 0;
+						if (cheak == 8)
+						{
+							//cout<<bit<<"<";
+							bit = in.get();
+							pass++;
+							cheak = 0;
+						}
+
+
+						//cout<<(int)(image.at<cv::Vec3b>(j,i)[p]&1)<<"->";
+						if (bit.test(7 - cheak) == 1)
+						{
+							image.at<cv::Vec3b>(j, i)[p] = image.at<cv::Vec3b>(j, i)[p] + 1;
+
+						}
+						//cout<<(int)(image.at<cv::Vec3b>(j,i)[p]&1)
+						//<<"="<<bit.test(cheak)
+						//<<",";
+						cheak++;
 					}
-
-
-					//cout<<(int)(image.at<cv::Vec3b>(j,i)[p]&1)<<"->";
-					if (bit.test(7 - cheak) == 1)
-					{
-						image.at<cv::Vec3b>(j, i)[p] = image.at<cv::Vec3b>(j, i)[p] + 1;
-
-					}
-					//cout<<(int)(image.at<cv::Vec3b>(j,i)[p]&1)
-					//<<"="<<bit.test(cheak)
-					//<<",";
-
-					cheak++;
 				}
 			}
 
@@ -939,7 +1111,12 @@ void bit_f_write(char* filename, Mat& image)
 	}
 }
 
-void bit_f_write_A(char* filename, Mat& image)
+/// <summary>
+/// Bit_f_write_s a.
+/// </summary>
+/// <param name="filename">The filename.</param>
+/// <param name="image">The image.</param>
+void bit_f_write_A(char* filename, Mat& image, int rgb)
 {
 	ifstream in(filename, ios::binary);
 	//载入文件
@@ -974,15 +1151,21 @@ void bit_f_write_A(char* filename, Mat& image)
 	int nc = image.cols; // number of columns  
 
 	//预处理，计算嵌入深度2~8
-	unsigned long  pxbit = nl*nc * 3;
 	int deep = 2;
 	double f = 0;
+	unsigned long  pxbit;
+	if (3 == rgb)
+		pxbit = nl*nc * 3;
+	else
+		pxbit = nl*nc * 1;
+	
+
 
 	f = (double)size / (double)((double)pxbit / 8);
-	cout << "size:" << size << endl;
-	cout << "pxbit/8:" << (double)pxbit / 8 << endl;
+	//_DEBUG cout << "size:" << size << endl;
+	//_DEBUG cout << "pxbit/8:" << (double)pxbit / 8 << endl;
 
-	cout << f << endl;
+	//_DEBUG cout << f << endl;
 	if (((f * 1000000 - (int)f * 1000000)) > 0)
 	{
 		f = f + 1.0;
@@ -993,7 +1176,7 @@ void bit_f_write_A(char* filename, Mat& image)
 	if (deep > 8)deep = 8;
 	if (deep < 2)deep = 2;
 
-	cout << "计算深度：" << deep << endl;
+	//_DEBUG cout << "计算深度：" << deep << endl;
 
 	//写入嵌入深度
 	int i = image.at<cv::Vec3b>(0, 0)[0];
@@ -1015,52 +1198,59 @@ void bit_f_write_A(char* filename, Mat& image)
 			{
 				for (int p = 0; p < 3; p++)
 				{//--------------------------------------------
-
-					bit_temp = image.at<cv::Vec3b>(j, i)[p];
-					//if(pass<200)
-					//cout<<"-------\n";
-					for (int z = 0; z < deep; z++)
+					if ((3 == rgb) || (rgb == p))
 					{
-						if (cheak == 8)
-						{
-							//	if(pass<200)
-							//cout<<"=============\n";
-							bit = in.get();
-							pass++;
-							cheak = 0;
-						}
+						bit_temp = image.at<cv::Vec3b>(j, i)[p];
 						//if(pass<200)
-						//cout<<"bit="<<bit<<">temp="<<bit_temp<<"<"<<cheak<<":"<<bit.test(7-cheak)<<">";
-
-
-
-						if (bit.test(7 - cheak) == 1)
+						//cout<<"-------\n";
+						for (int z = 0; z < deep; z++)
 						{
-							bit_temp.set(z);
-							cheak++;
-						}
-						else
-						{
-							bit_temp.reset(z);
-							cheak++;
+							if (cheak == 8)
+							{
+								//	if(pass<200)
+								//cout<<"=============\n";
+								bit = in.get();
+								pass++;
+								cheak = 0;
+							}
+							//if(pass<200)
+							//cout<<"bit="<<bit<<">temp="<<bit_temp<<"<"<<cheak<<":"<<bit.test(7-cheak)<<">";
+
+
+							if (bit.test(7 - cheak) == 1)
+							{
+								bit_temp.set(z);
+								cheak++;
+							}
+							else
+							{
+								bit_temp.reset(z);
+								cheak++;
+
+							}
+							//if(pass<200)
+							//cout<<bit_temp<<endl;
 
 						}
-						//if(pass<200)
-						//cout<<bit_temp<<endl;
 
+						image.at<cv::Vec3b>(j, i)[p] = bit_temp.to_ulong();
 					}
-
-					image.at<cv::Vec3b>(j, i)[p] = bit_temp.to_ulong();
 
 				}//--------------------------------------------
 			}
 
 		}
 	}
-	cout << rrr;
+	//_DEBUG cout << rrr;
 }
 
-void bit_f_decode_A(Mat& image, char* filename ,int en_deep)
+/// <summary>
+/// Bit_f_decode_s a.
+/// </summary>
+/// <param name="image">The image.</param>
+/// <param name="filename">The filename.</param>
+/// <param name="en_deep">The en_deep.</param>
+void bit_f_decode_A(Mat& image, char* filename , int rgb, int en_deep)
 {
 	using namespace std;
 
@@ -1082,14 +1272,12 @@ void bit_f_decode_A(Mat& image, char* filename ,int en_deep)
 		deep = deep % 100 % 10 + 2;
 
 		if (deep > 8)deep = 8;
-		cout << "判断深度:" << deep;
+		//_DEBUG cout << "判断深度:" << deep;
 	}
 	else
 	{
 		deep = en_deep;
 	}
-
-
 
 	char t;
 	for (int j = 0; j < nl; j++)
@@ -1100,29 +1288,32 @@ void bit_f_decode_A(Mat& image, char* filename ,int en_deep)
 			{
 				for (int p = 0; p < 3; p++)
 				{//------------------------
-					pass++;
-					bit_temp = image.at<cv::Vec3b>(j, i)[p];
-
-					for (int z = 0; z < deep; z++)
+					if ((rgb == p) || (3 == rgb))
 					{
-						if (cheak == 8)
+						pass++;
+						bit_temp = image.at<cv::Vec3b>(j, i)[p];
+
+						for (int z = 0; z < deep; z++)
 						{
-							t = (char)bit.to_ulong();
-							in.put(t);
-							cheak = 0;
-							bit.reset();
-						}
+							if (cheak == 8)
+							{
+								t = (char)bit.to_ulong();
+								in.put(t);
+								cheak = 0;
+								bit.reset();
+							}
 
 
-						if (bit_temp.test(z) == 1)
-						{
-							bit.set(7 - cheak);
-							cheak++;
-						}
-						else
-						{
-							bit.reset(7 - cheak);
-							cheak++;
+							if (bit_temp.test(z) == 1)
+							{
+								bit.set(7 - cheak);
+								cheak++;
+							}
+							else
+							{
+								bit.reset(7 - cheak);
+								cheak++;
+							}
 						}
 					}
 				}
@@ -1133,7 +1324,12 @@ void bit_f_decode_A(Mat& image, char* filename ,int en_deep)
 	in.close();
 }
 
-void bit_f_decode(Mat& image, char* filename)
+/// <summary>
+/// Bit_f_decodes the specified image.
+/// </summary>
+/// <param name="image">The image.</param>
+/// <param name="filename">The filename.</param>
+void bit_f_decode(Mat& image, char* filename, int rgb)
 {
 
 	int nl = image.rows; // number of lines  
@@ -1149,31 +1345,35 @@ void bit_f_decode(Mat& image, char* filename)
 	for (int j = 0; j < nl; j++) {
 		for (int i = 0; i < nc; i++)
 		{
+			
+			
 			for (int p = 0; p < 3; p++)
 			{
-				if (cheak == 8)
-				{
-					t = (char)bit.to_ulong();
-					in.put(t);
-					cheak = 0;
-					bit.reset();
-				}
+				if ((3==rgb)|| (rgb == p))
+				{ 
+					if (cheak == 8)
+					{
+						t = (char)bit.to_ulong();
+						in.put(t);
+						cheak = 0;
+						bit.reset();
+					}
 
-				pass++;
-				//if(pass<100)
-				//cout<<(int)(image.at<cv::Vec3b>(j,i)[p]&1)<<",";
+					pass++;
+					//if(pass<100)
+					//cout<<(int)(image.at<cv::Vec3b>(j,i)[p]&1)<<",";
 
-				if ((image.at<cv::Vec3b>(j, i)[p] & 1) == 1)
-				{
-					bit.set(7 - cheak);
-					cheak++;
+					if ((image.at<cv::Vec3b>(j, i)[p] & 1) == 1)
+					{
+						bit.set(7 - cheak);
+						cheak++;
+					}
+					else
+					{
+						bit.reset(7 - cheak);
+						cheak++;
+					}
 				}
-				else
-				{
-					bit.reset(7 - cheak);
-					cheak++;
-				}
-
 			}
 
 		}

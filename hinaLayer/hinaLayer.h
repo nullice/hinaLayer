@@ -41,34 +41,20 @@ public:
 	void eo_to_image(int rgb = 3);//奇偶域可视化，图像转换到图像数据矩阵(image)，
 	void eo_write_mask(char* mask_file, int rgb = 3, int auto_size = 0);//在图像奇偶域上写入水印（mask -> image）；指定通道；auto_size 设置是否自动缩放水印大小
 	void eo_write_mask(Mat& mask, int rgb = 3, int auto_size = 0);//在图像奇偶域上写入水印（mask.png -> image）；指定通道；auto_size 设置是否自动缩放水印大小
-	void eo_write_file(char* info_file);//在图像奇偶域上写入文件二进制数据（file -> image）
-	void eo_out_file(char* out_file);//把图像奇偶域数据作为二进制数据文件写出（image -> file）
+	void eo_write_file(char* info_file, int rgb = 3);//在图像奇偶域上写入文件二进制数据（file -> image）；指定通道
+	void eo_out_file(char* out_file, int rgb = 3);//把图像奇偶域数据作为二进制数据文件写出（image -> file）；指定通道
 
 
-	void lsb_write_file(char* info_file);//在图像像素数据低位写入文件二进制数据（file -> image）
-	void lsb_out_file(char* info_file, int en_deep = 0);//在把图像像素数据低位作为二进制数据文件写出（image -> file）;en_deep 强制指定深度，为0自动
-	unsigned long lsb_get_max();//计算图像最大可写入二进制数据的大小，单位字节
-	int lsb_get_deep(char* file);// 计算一个文件写入到图像应该使用的深度
+	void lsb_write_file(char* info_file, int rgb = 3);//在图像像素数据低位写入文件二进制数据（file -> image）
+	void lsb_out_file(char* info_file, int rbg = 3, int en_deep = 0);//在把图像像素数据低位作为二进制数据文件写出（image -> file）;en_deep 强制指定深度，为0自动；指定通道
+	unsigned long lsb_get_max(int rgb = 3);//计算图像最大可写入二进制数据的大小，单位字节；指定通道
+	int lsb_get_deep(char* file, int rgb = 3);// 计算一个文件写入到图像应该使用的深度；指定通道
 
 private:
 	void dtf_to_image(int rgb = 3);//DTF中间矩阵（mmat）转换到图像数据矩阵(image)
 
 	//out
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+};
 
 
 #endif

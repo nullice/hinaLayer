@@ -28,10 +28,21 @@
 //resize in_f out_f w h
 
 
-int eo_mask(char* in_file, char* mask_file, char* out_file, int rgb)
+int eo_en_mask(char* in_file, char* mask_file, char* out_file, int rgb)
 {
 	hinaLayer h;
 	h.open_file(in_file);
 	h.eo_write_mask(mask_file, rgb);
 	h.out_file(out_file);
 }
+
+int eo_de_mask(char* in_file, char* out_file, int rgb)
+{
+	hinaLayer h;
+	h.open_file(in_file);
+	h.eo_out_file(out_file);
+	h.out_file(out_file);
+}
+
+
+

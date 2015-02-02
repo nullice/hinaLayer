@@ -9,6 +9,7 @@
 using namespace std;
 
 
+
 int main()
 {
 	cout<<11;
@@ -19,22 +20,23 @@ int main()
 	//j.eo_write_mask("aaa.png");
 	//j.show_eo("写入奇偶水印");
 
-	//j.eo_write_file("test.txt");
-	//j.eo_out_file("1.txt");
+	//j.eo_write_file("test.txt",2);
+	//j.eo_out_file("1.txt",2);
 
 	//j.eo_to_image(3);
+
 	//j.show();
 	//j.show_eo();
 
 
 
 
-	j.lsb_write_file("test.txt");
-	j.lsb_out_file("1.txt",8);
-	j.show("结果");
+	j.lsb_write_file("test.txt",0);
+	j.lsb_out_file("1.txt",0);
+	//j.show("结果");
 
-	//cout << endl <<"深度："<< j.lsb_get_deep("test.txt") << endl;
-	//cout <<"最大尺寸："<< (j.lsb_get_max()) / 1000 << "KB" << endl;
+	cout << endl <<"深度："<< j.lsb_get_deep("test.txt") << endl;
+	cout <<"最大尺寸："<< (j.lsb_get_max()) / 1000 << "KB" << endl;
 
 	getchar();
 

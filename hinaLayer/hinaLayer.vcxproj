@@ -80,7 +80,7 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="commd.cpp" />
+    <ClCompile Include="hinaLayer_comd.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="hinaLayer.cpp" />
   </ItemGroup>
