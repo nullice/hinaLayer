@@ -62,9 +62,9 @@ int en_dtf_mask(char* in_file, char* mask_file, char* out_file, int rgb)
 {
 	hinaLayer h;
 	h.open_file(in_file);
-	h.dtf_make(rgb);
+	h.dtf_make(3);
 	h.dtf_write_mask(mask_file, rgb);
-	h.dtf_inverse_make(rgb);
+	h.dtf_inverse_make(3);
 	h.out_file(out_file);
 	return 0;
 }
@@ -123,9 +123,9 @@ int main()
 	//en_lsb_file("test\\rr.jpg", "test\\test.txt", "test\\out.png", 3);
 	//de_lsb_file("test\\out.png", "test\\out2.txt", 3);
 
-	en_dtf_mask("test\\oo.jpg", "test\\pp2.png", "test\\out.png", 3);
+	en_dtf_mask("test\\oo.jpg", "test\\pp2.png", "test\\out.png", 2);
 	de_dtf_mask("test\\out.png", "test\\out2.png", 3);
-
+	std::cout << "dtfÆµÓòÐ´ÈëË®Ó¡²âÊÔ";
 
 }
 

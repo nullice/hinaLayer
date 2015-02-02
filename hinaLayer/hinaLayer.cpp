@@ -235,7 +235,7 @@ int hinaLayer::dtf_inverse_make(int rgb /*= 3*/)
 		show_idft(mmat[rgb], image, mmat[rgb]);
 	}
 	
-	dtf_to_image(3);
+	dtf_to_image(rgb);
 	return 0;
 }
 
