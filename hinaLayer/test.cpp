@@ -16,16 +16,22 @@ int main()
 	j.open_file("rr.jpg");
 	j.show("打开文件");
 
-	j.eo_write_mask("aaa.png");
-	j.show_eo("写入奇偶水印");
+	//j.eo_write_mask("aaa.png",2);
+	//j.show_eo("写入奇偶水印");
+
+	//j.eo_to_image(3);
+	//j.show();
+	//j.show_eo();
 
 
-	j.lsb_write_file("test.txt");
-	j.lsb_out_file("1.txt");
-	j.show("结果");
 
-	cout << endl << j.lsb_get_deep("test.txt") << endl;
-	cout << (j.lsb_get_max()) / 1000 << "KB" << endl;
+
+	//j.lsb_write_file("test.txt");
+	//j.lsb_out_file("1.txt");
+	//j.show("结果");
+
+	//cout << endl <<"深度："<< j.lsb_get_deep("test.txt") << endl;
+	//cout <<"最大尺寸："<< (j.lsb_get_max()) / 1000 << "KB" << endl;
 
 	getchar();
 

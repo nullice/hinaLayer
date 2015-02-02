@@ -90,7 +90,18 @@ void hinaLayer::show_eo(string title, int rgb /*= 3*/)
 
 	Mat temp;
 	image.copyTo(temp);
-	eo_decode(temp, rgb);
+
+	if (3 == rgb)
+	{
+		eo_decode(temp, 0);
+		eo_decode(temp, 1);
+		eo_decode(temp, 2);
+	}
+	else
+	{
+		eo_decode(temp, rgb);
+	}
+	
 
 	imshow(title + " [" + to_string(rgb) + "]", temp);
 	waitKey(0);
@@ -291,7 +302,21 @@ int hinaLayer::dtf_write_mask(char* mask_file, int rgb /*= 3*/)
 void hinaLayer::eo_to_image(int rgb /*= 3*/)
 {
 	void eo_decode(Mat& imageROI, int rgb);
-	eo_decode(image, rgb);
+
+
+	if (3 == rgb)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			eo_decode(image, i);
+		}
+	}
+	else
+	{
+		eo_decode(image, rgb);
+	}
+
+
 }
 
 
@@ -616,15 +641,27 @@ void eo_decode(Mat& imageROI, int rgb)
 
 			if (eo_bool(dot) == 1)
 			{
-				imageROI.at<cv::Vec3b>(i, j)[0] = 255;
-				imageROI.at<cv::Vec3b>(i, j)[1] = 255;
-				imageROI.at<cv::Vec3b>(i, j)[2] = 255;
+				imageROI.at<cv::Vec3b>(i, j)[rgb] = 255;
+				if (3 == rgb)
+				{
+					imageROI.at<cv::Vec3b>(i, j)[0] = 255;
+					imageROI.at<cv::Vec3b>(i, j)[1] = 255;
+					imageROI.at<cv::Vec3b>(i, j)[2] = 255;
+				}
+				
+				
+
 			}
 			else
 			{
-				imageROI.at<cv::Vec3b>(i, j)[0] = 0;
-				imageROI.at<cv::Vec3b>(i, j)[1] = 0;
-				imageROI.at<cv::Vec3b>(i, j)[2] = 0;
+				imageROI.at<cv::Vec3b>(i, j)[rgb] = 0;
+				if (3 == rgb)
+				{
+					imageROI.at<cv::Vec3b>(i, j)[0] = 0;
+					imageROI.at<cv::Vec3b>(i, j)[1] = 0;
+					imageROI.at<cv::Vec3b>(i, j)[2] = 0;
+				}
+
 			}
 		}
 	}

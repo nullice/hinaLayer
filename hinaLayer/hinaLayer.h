@@ -41,7 +41,7 @@ public:
 	int	 dtf_write_mask(Mat& mask, int rgb = 3);//在 DTF中间矩阵（mask -> mmat） 写入水印图像矩阵
 	int	 dtf_write_mask(char* mask_file, int rgb = 3);//在 DTF中间矩阵（mask.png -> mmat） 写入水印图像文件
 
-	void eo_to_image(int rgb = 3);
+	void eo_to_image(int rgb = 3);//
 	void eo_write_mask(char* mask_file, int rgb = 3, int auto_size = 0);
 	void eo_write_mask(Mat& mask, int rgb = 3, int auto_size = 0);
 	void eo_write_file(char* info_file);
