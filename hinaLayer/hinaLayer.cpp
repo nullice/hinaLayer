@@ -392,10 +392,10 @@ void hinaLayer::lsb_write_file(char* info_file)
 	bit_f_write_A(info_file, image);
 }
 
-void hinaLayer::lsb_out_file(char* info_file)
+void hinaLayer::lsb_out_file(char* info_file,int en_deep)
 {
-	void bit_f_decode_A(Mat& image, char* filename);
-	bit_f_decode_A(image, info_file);
+	void bit_f_decode_A(Mat& image, char* filename, int en_deep = 0);
+	bit_f_decode_A(image, info_file, en_deep);
 }
 
 unsigned long hinaLayer::lsb_get_max()
@@ -444,6 +444,7 @@ int hinaLayer::lsb_get_deep(char* file)
 	return deep;
 }
 
+//com
 
 
 
@@ -452,7 +453,8 @@ int hinaLayer::lsb_get_deep(char* file)
 
 
 
-//openCV 操作----------------------------------------------------------------------------------------
+
+//openCV 操作==============================================================================================================================
 void make_mmat(Mat& in, Mat& out) //预处理，把输入图像转换为能进行DFT的中间矩阵,输入&in,输出&out
 {
 	//实数部分	
@@ -1058,7 +1060,7 @@ void bit_f_write_A(char* filename, Mat& image)
 	cout << rrr;
 }
 
-void bit_f_decode_A(Mat& image, char* filename)
+void bit_f_decode_A(Mat& image, char* filename ,int en_deep)
 {
 	using namespace std;
 
@@ -1074,12 +1076,19 @@ void bit_f_decode_A(Mat& image, char* filename)
 	in.seekp(0, ios::beg);
 
 	int deep;//判断深度
+	if (0 == en_deep)
+	{	//以第一个像素首位0通道值的个位数判断深度
+		deep = image.at<cv::Vec3b>(0, 0)[0];
+		deep = deep % 100 % 10 + 2;
 
-	deep = image.at<cv::Vec3b>(0, 0)[0];
-	deep = deep % 100 % 10 + 2;
+		if (deep > 8)deep = 8;
+		cout << "判断深度:" << deep;
+	}
+	else
+	{
+		deep = en_deep;
+	}
 
-	if (deep > 8)deep = 8;
-	cout << "判断深度:" << deep;
 
 
 	char t;
@@ -1087,12 +1096,11 @@ void bit_f_decode_A(Mat& image, char* filename)
 	{
 		for (int i = 0; i < nc; i++)
 		{
-			if (i + j > 0)
+			if ((i + j > 0) || (0 != en_deep))//是否忽略第一个像素
 			{
 				for (int p = 0; p < 3; p++)
 				{//------------------------
 					pass++;
-
 					bit_temp = image.at<cv::Vec3b>(j, i)[p];
 
 					for (int z = 0; z < deep; z++)
@@ -1122,10 +1130,7 @@ void bit_f_decode_A(Mat& image, char* filename)
 			}//------------------------
 		}
 	}
-
-
 	in.close();
-
 }
 
 void bit_f_decode(Mat& image, char* filename)
