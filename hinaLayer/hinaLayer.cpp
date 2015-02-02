@@ -66,6 +66,29 @@ int hinaLayer::out_file(char* filename)
 	return 1;
 }
 
+
+
+/// <summary>
+/// 写出保存 hinaLayer 的图像(频域图像).
+/// </summary>
+/// <param name="filename">写出文件名.</param>
+/// <returns>int.</returns>
+int hinaLayer::out_file_fdomain(char* filename)
+{
+	bool b = imwrite(filename, fdomain*255);
+	if (b != true)
+	{
+		cerr << "写到文件" << filename << "失败";
+		return 0;
+	}
+
+	return 1;
+}
+
+
+
+
+
 /// <summary>
 /// 重新设置图像大小，图像内容将被拉伸.
 /// </summary>

@@ -22,6 +22,7 @@ public:
 
 	int open_file(char* filename, int mono = 0);//打开文件
 	int out_file(char* filename);//写出文件
+	int out_file_fdomain(char* filename);//写出文件(频域图像)
 	void show(string title = "预览原图（image）");//预览图像
 	void show_fdomain(string title = "预览频域图（fdomain）");//预览频域图像
 	void show_eo(string title = "奇偶图像", int rgb = 3);//预览频域图像
@@ -32,11 +33,8 @@ public:
 
 	int  dtf_make(int rgb = 3);//图像转换到DTF中间矩阵（image >> mmat）；指定通道
 	int  dtf_inverse_make(int rgb = 3);//DTF中间矩阵逆转换到图像（mmat >> image）；指定通道
-
-
 	int  dtf_print(int rgb = 3);//DTF中间矩阵可视化（mmat >> fdomain）；指定通道
 	void dtf_mmat_n2c(int rgb = 3);//DTF中间矩阵（mmat）象限调换；指定通道
-
 	int	 dtf_write_mask(Mat& mask, int rgb = 3);//在 DTF中间矩阵（mask -> mmat） 写入水印图像矩阵；指定通道
 	int	 dtf_write_mask(char* mask_file, int rgb = 3);//在 DTF中间矩阵（mask.png -> mmat） 写入水印图像文件；指定通道
 

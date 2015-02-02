@@ -48,6 +48,30 @@ int en_eo_file(char* in_file, char* info_file, char* out_file, int rgb)
 	return 0;
 }
 
+int en_lsb_file(char* in_file, char* info_file, char* out_file, int rgb)
+{
+	hinaLayer h;
+	h.open_file(in_file);
+	h.lsb_write_file(info_file, rgb);
+	h.out_file(out_file);
+	return 0;
+}
+
+
+int en_dtf_mask(char* in_file, char* mask_file, char* out_file, int rgb)
+{
+	hinaLayer h;
+	h.open_file(in_file);
+	h.dtf_make(rgb);
+	h.dtf_write_mask(mask_file, rgb);
+	h.dtf_inverse_make(rgb);
+	h.out_file(out_file);
+	return 0;
+}
+
+
+
+
 
 int de_eo_mask(char* in_file, char* out_file, int rgb)
 {
@@ -67,8 +91,23 @@ int de_eo_file(char* in_file, char* out_file, int rgb)
 	return 0;
 }
 
+int de_lsb_file(char* in_file, char* out_file, int rgb)
+{
+	hinaLayer h;
+	h.open_file(in_file);
+	h.lsb_out_file(out_file, rgb);
+	return 0;
+}
 
-
+int de_dtf_mask(char* in_file, char* out_file, int rgb)
+{
+	hinaLayer h;
+	h.open_file(in_file);
+	h.dtf_make(rgb);
+	h.dtf_print(rgb);
+	h.out_file_fdomain(out_file);
+	return 0;
+}
 
 
 int main()
@@ -77,8 +116,16 @@ int main()
 	//de_eo_mask("test\out.png", "test\out2.png", 3);
 	//cout<<"ÆæÅ¼Î»Ð´ÈëË®Ó¡²âÊÔ"
 
-	en_eo_file("test\\rr.jpg", "test\\test.txt", "test\\out.png", 3);
-	de_eo_file("test\\out.png", "test\\out2.txt", 3);
+	//en_eo_file("test\\rr.jpg", "test\\test.txt", "test\\out.png", 3);
+	//de_eo_file("test\\out.png", "test\\out2.txt", 3);
+	//cout<<"ÆæÅ¼Î»Ð´ÈëÎÄ¼þ²âÊÔ"
+
+	//en_lsb_file("test\\rr.jpg", "test\\test.txt", "test\\out.png", 3);
+	//de_lsb_file("test\\out.png", "test\\out2.txt", 3);
+
+	en_dtf_mask("test\\oo.jpg", "test\\pp2.png", "test\\out.png", 3);
+	de_dtf_mask("test\\out.png", "test\\out2.png", 3);
+
 
 }
 
