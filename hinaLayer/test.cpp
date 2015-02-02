@@ -16,8 +16,11 @@ int main()
 	j.open_file("rr.jpg");
 	j.show("打开文件");
 
-	//j.eo_write_mask("aaa.png",2);
+	//j.eo_write_mask("aaa.png");
 	//j.show_eo("写入奇偶水印");
+
+	j.eo_write_file("test.txt");
+	j.eo_out_file("1.txt");
 
 	//j.eo_to_image(3);
 	//j.show();
