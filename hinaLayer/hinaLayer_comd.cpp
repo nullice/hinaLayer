@@ -1,5 +1,10 @@
 #include <iostream>
+#include <string>
+#include<bitset>
+#include<fstream>
 #include "hinaLayer.h"
+#include <vector>
+#include <algorithm>
 
 
 //----【奇偶位】处理
@@ -214,7 +219,49 @@ void mirrorX(char* in_file, char* out_file)
 //=====================================================================================
 
 
-int 
+int hide_file(char* in_file, char* out_file, int rgb)
+{
+	using namespace std;
+	//de_lsb_file(in_file, out_file, rgb);
+
+
+
+	//_DEBUG ifstream in(out_file, ios::binary);
+	ifstream in(in_file, ios::binary);
+
+	//载入文件
+	if (!in)
+	{
+		cerr << "open error!" << endl;
+		abort();
+	}
+
+	in.seekg(0, ios::end);
+	//in.tellg();//计算文件大小
+	in.seekg(0, ios::beg);
+
+
+	wstring data;
+
+	for (unsigned long i; true != in.eof(); i++)
+	{
+		data.push_back(in.get());
+	}
+	cout << (unsigned int)data[0];
+	
+	ofstream out(out_file, ios::binary);
+
+	
+	wstring::iterator it;
+	it = data.begin();
+	for (unsigned long i; it != data.end(); it++)
+	{
+		out.put((*it));
+
+	}
+
+
+}
 
 
 
@@ -244,6 +291,11 @@ int main()
 	//mirrorX("test\\out.jpg", "test\\out2.jpg");
 	//mirrorY("test\\out2.jpg", "test\\out3.jpg");
 	//std::cout << "辅助功能测试";
+
+
+	//de_lsb_file("test\\rr_INfile1.png", "test\\outttttttt.txt", 3);
+	hide_file("test\\1.zip", "test\\2.zip",3);
+	getchar();
 
 }
 

@@ -1,4 +1,4 @@
-#include <iostream>
+
 #include "hinaLayer.h"
 //C++
 #include <iostream>

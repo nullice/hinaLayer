@@ -1264,6 +1264,7 @@ void bit_f_write_A(char* filename, Mat& image, int rgb)
 
 		}
 	}
+	in.close();
 	//_DEBUG cout << rrr;
 }
 
