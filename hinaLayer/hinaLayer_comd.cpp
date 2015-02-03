@@ -240,7 +240,6 @@ int hide_file(char* in_file, char* out_file, int rgb)
 	//in.tellg();//计算文件大小
 	in.seekg(0, ios::beg);
 
-
 	wstring data;
 
 	for (unsigned long i; true != in.eof(); i++)
@@ -249,17 +248,34 @@ int hide_file(char* in_file, char* out_file, int rgb)
 	}
 	cout << (unsigned int)data[0];
 	
+
+
 	ofstream out(out_file, ios::binary);
 
 	
 	wstring::iterator it;
-	it = data.begin();
-	for (unsigned long i; it != data.end(); it++)
-	{
-		out.put((*it));
+	
+	wstring b;
 
+
+	if (255==data[0] && 254==data[1])
+	{
+		
+		size_t pos = data.find_last_of({ 254, 255, 49, 48, 48, 46, 116, 120, 116, 254, 255, 152, 10, 20, 253, 254, 255, 255 });
+		
+		b = data.substr(2, pos - 18-2);
+		//cout << "[" <<a << "]" << endl;
+
+		cout <<endl<<hex<< pos-18;
 	}
 
+	it = b.begin();
+
+	for (unsigned long i; it != b.end(); it++)
+	{
+		out.put((*it));
+	}
+	out.close();
 
 }
 
@@ -294,7 +310,7 @@ int main()
 
 
 	//de_lsb_file("test\\rr_INfile1.png", "test\\outttttttt.txt", 3);
-	hide_file("test\\1.zip", "test\\2.zip",3);
+	hide_file("test\\outttttttt.txt", "test\\outttttttt222222.txt",3);
 	getchar();
 
 }
