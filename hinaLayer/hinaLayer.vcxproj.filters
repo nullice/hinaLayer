@@ -29,5 +29,8 @@
     <ClInclude Include="hinaLayer.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="hinaLayer_comd.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

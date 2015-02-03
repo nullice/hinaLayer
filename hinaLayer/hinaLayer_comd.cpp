@@ -30,6 +30,14 @@
 
 
 
+/// <summary>
+/// 在图片奇偶位上写入水印.
+/// </summary>
+/// <param name="in_file">要写入水印的图片文件.</param>
+/// <param name="mask_file">作为水印的图片文件.</param>
+/// <param name="out_file">保存结果的图片文件.</param>
+/// <param name="rgb">使用色彩通道（012顺序BGR，3为使用全部通道）.</param>
+/// <returns>int.</returns>
 int en_eo_mask(char* in_file, char* mask_file, char* out_file, int rgb)
 {
 	hinaLayer h;
@@ -39,6 +47,14 @@ int en_eo_mask(char* in_file, char* mask_file, char* out_file, int rgb)
 	return 0;
 }
 
+/// <summary>
+/// 在图片奇偶位上写入文件.
+/// </summary>
+/// <param name="in_file">要写入文件的图片文件.</param>
+/// <param name="info_file">作为写入信息的文件.</param>
+/// <param name="out_file">保存结果的图片文件.</param>
+/// <param name="rgb">使用色彩通道（012顺序BGR，3为使用全部通道）.</param>
+/// <returns>int.</returns>
 int en_eo_file(char* in_file, char* info_file, char* out_file, int rgb)
 {
 	hinaLayer h;
@@ -48,6 +64,14 @@ int en_eo_file(char* in_file, char* info_file, char* out_file, int rgb)
 	return 0;
 }
 
+/// <summary>
+/// 在图片像素低位上写入文件.
+/// </summary>
+/// <param name="in_file">要写入文件的图片文件.</param>
+/// <param name="info_file">作为写入信息的文件.</param>
+/// <param name="out_file">保存结果的图片文件.</param>
+/// <param name="rgb">使用色彩通道（012顺序BGR，3为使用全部通道）.</param>
+/// <returns>int.</returns>
 int en_lsb_file(char* in_file, char* info_file, char* out_file, int rgb)
 {
 	hinaLayer h;
@@ -57,7 +81,14 @@ int en_lsb_file(char* in_file, char* info_file, char* out_file, int rgb)
 	return 0;
 }
 
-
+/// <summary>
+/// 在图片DTF频域上写入水印.
+/// </summary>
+/// <param name="in_file">要写入水印的图片文件.</param>
+/// <param name="mask_file">作为水印的图片文件.</param>
+/// <param name="out_file">保存结果的图片文件.</param>
+/// <param name="rgb">使用色彩通道（012顺序BGR，3为使用全部通道）.</param>
+/// <returns>int.</returns>
 int en_dtf_mask(char* in_file, char* mask_file, char* out_file, int rgb)
 {
 	hinaLayer h;
@@ -71,8 +102,13 @@ int en_dtf_mask(char* in_file, char* mask_file, char* out_file, int rgb)
 
 
 
-
-
+/// <summary>
+/// 导出图片奇偶位水印.
+/// </summary>
+/// <param name="in_file">要导出水印的图片文件.</param>
+/// <param name="out_file">保存导出结果的图片文件.</param>
+/// <param name="rgb">使用色彩通道（012顺序BGR，3为使用全部通道）.</param>
+/// <returns>int.</returns>
 int de_eo_mask(char* in_file, char* out_file, int rgb)
 {
 	hinaLayer h;
@@ -82,7 +118,13 @@ int de_eo_mask(char* in_file, char* out_file, int rgb)
 	return 0;
 }
 
-
+/// <summary>
+/// 导出图片奇偶位文件.
+/// </summary>
+/// <param name="in_file">The in_file.</param>
+/// <param name="out_file">The out_file.</param>
+/// <param name="rgb">The RGB.</param>
+/// <returns>int.</returns>
 int de_eo_file(char* in_file, char* out_file, int rgb)
 {
 	hinaLayer h;
@@ -110,7 +152,6 @@ int de_dtf_mask(char* in_file, char* out_file, int rgb)
 }
 
 
-
 void resize(char* in_file, char* out_file, int w, int h)
 {
 	hinaLayer hl;
@@ -118,7 +159,6 @@ void resize(char* in_file, char* out_file, int w, int h)
 	hl.resize(w, h);
 	hl.out_file(out_file);
 }
-
 
 void mirrorY(char* in_file, char* out_file)
 {
@@ -135,7 +175,6 @@ void mirrorX(char* in_file, char* out_file)
 	hl.mirrorX();
 	hl.out_file(out_file);
 }
-
 
 
 int main()
