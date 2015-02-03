@@ -121,9 +121,9 @@ int de_eo_mask(char* in_file, char* out_file, int rgb)
 /// <summary>
 /// 导出图片奇偶位文件.
 /// </summary>
-/// <param name="in_file">The in_file.</param>
-/// <param name="out_file">The out_file.</param>
-/// <param name="rgb">The RGB.</param>
+/// <param name="in_file">要导出文件的图片文件.</param>
+/// <param name="out_file">保存导出结果的图片文件.</param>
+/// <param name="rgb">使用色彩通道（012顺序BGR，3为使用全部通道）.</param>
 /// <returns>int.</returns>
 int de_eo_file(char* in_file, char* out_file, int rgb)
 {
@@ -133,6 +133,13 @@ int de_eo_file(char* in_file, char* out_file, int rgb)
 	return 0;
 }
 
+/// <summary>
+/// 导出像素低位文件.
+/// </summary>
+/// <param name="in_file">The in_file.</param>
+/// <param name="out_file">The out_file.</param>
+/// <param name="rgb">The RGB.</param>
+/// <returns>int.</returns>
 int de_lsb_file(char* in_file, char* out_file, int rgb)
 {
 	hinaLayer h;
