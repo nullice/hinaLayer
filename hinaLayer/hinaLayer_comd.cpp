@@ -134,11 +134,11 @@ int de_eo_file(char* in_file, char* out_file, int rgb)
 }
 
 /// <summary>
-/// 导出像素低位文件.
+/// 导出图片像素低位文件.
 /// </summary>
-/// <param name="in_file">The in_file.</param>
-/// <param name="out_file">The out_file.</param>
-/// <param name="rgb">The RGB.</param>
+/// <param name="in_file">要导出文件的图片文件.</param>
+/// <param name="out_file">保存导出结果的图片文件.</param>
+/// <param name="rgb">使用色彩通道（012顺序BGR，3为使用全部通道）.</param>
 /// <returns>int.</returns>
 int de_lsb_file(char* in_file, char* out_file, int rgb)
 {
@@ -148,6 +148,13 @@ int de_lsb_file(char* in_file, char* out_file, int rgb)
 	return 0;
 }
 
+/// <summary>
+/// 导出图片DTF频域水印.
+/// </summary>
+/// <param name="in_file">要导出水印的图片文件</param>
+/// <param name="out_file">保存导出结果的图片文件.</param>
+/// <param name="rgb">使用色彩通道（012顺序BGR，3为使用全部通道）.</param>
+/// <returns>int.</returns>
 int de_dtf_mask(char* in_file, char* out_file, int rgb)
 {
 	hinaLayer h;
@@ -159,6 +166,13 @@ int de_dtf_mask(char* in_file, char* out_file, int rgb)
 }
 
 
+/// <summary>
+/// 重设图像大小（缩放）.
+/// </summary>
+/// <param name="in_file">要进行处理图片文件.</param>
+/// <param name="out_file">保存处理结果的图片文件.</param>
+/// <param name="w">图片新的宽度.</param>
+/// <param name="h">图片新的高度.</param>
 void resize(char* in_file, char* out_file, int w, int h)
 {
 	hinaLayer hl;
@@ -167,6 +181,11 @@ void resize(char* in_file, char* out_file, int w, int h)
 	hl.out_file(out_file);
 }
 
+/// <summary>
+/// 图片Y轴镜像（垂直翻转）.
+/// </summary>
+/// <param name="in_file">要进行处理图片文件.</param>
+/// <param name="out_file">保存处理结果的图片文件.</param>
 void mirrorY(char* in_file, char* out_file)
 {
 	hinaLayer hl;
@@ -175,6 +194,11 @@ void mirrorY(char* in_file, char* out_file)
 	hl.out_file(out_file);
 }
 
+/// <summary>
+/// 图片X轴镜像（水平翻转）.
+/// </summary>
+/// <param name="in_file">要进行处理图片文件.</param>
+/// <param name="out_file">保存处理结果的图片文件.</param>
 void mirrorX(char* in_file, char* out_file)
 {
 	hinaLayer hl;
@@ -182,6 +206,20 @@ void mirrorX(char* in_file, char* out_file)
 	hl.mirrorX();
 	hl.out_file(out_file);
 }
+
+
+
+//=====================================================================================
+//文件隐写功能：
+//=====================================================================================
+
+
+int 
+
+
+
+
+
 
 
 int main()
@@ -206,8 +244,6 @@ int main()
 	//mirrorX("test\\out.jpg", "test\\out2.jpg");
 	//mirrorY("test\\out2.jpg", "test\\out3.jpg");
 	//std::cout << "辅助功能测试";
-
-
 
 }
 
