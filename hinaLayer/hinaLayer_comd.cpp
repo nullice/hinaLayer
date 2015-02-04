@@ -288,10 +288,12 @@ char* get_path_add_bs(char* in)
 	str = in;
 	str = get_path_add_bs(str);
 
-	char* cstr;
-	cstr=const_cast<char*>(str.c_str());
+	static char*cstr = const_cast<char*>(str.c_str());
+	cout << endl << cstr << endl;
+
 	return cstr;
 }
+
 
 
 int file_test(const char* filename)
@@ -326,7 +328,7 @@ int hide_file(char* in_file, char* out_file, int rgb)
 
 		string tempf = "";
 	
-		cout << endl << "tempf:" << a << endl;
+
 		tempf = tempf+get_path_add_bs(out_file);
 		
 	
@@ -396,13 +398,6 @@ int hide_file(char* in_file, char* out_file, int rgb)
 
 		}
 
-	
-		
-
-
-
-		
-		
 
 	}
 	
@@ -447,8 +442,8 @@ int main()
 	//de_lsb_file("test\\2.png", "test\\22.exe", 3);
 	//hide_file("test\\b2.png", "test\\R",3);
 
-	char* a = "R";
-	a = get_path_add_bs(out_file);
+	char* a = "test\\R";
+	a = get_path_add_bs(a);
 	cout << a;
 
 
