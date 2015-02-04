@@ -5,7 +5,7 @@
 #include "hinaLayer.h"
 #include <vector>
 #include <algorithm>
-
+#include <sys/stat.h>
 
 //----【奇偶位】处理
 //en_mig  in_flie info_img out_flie  rgb  图片编码写入
@@ -217,17 +217,123 @@ void mirrorX(char* in_file, char* out_file)
 //=====================================================================================
 //文件隐写功能：
 //=====================================================================================
+using namespace std;
+
+
+void wstring_to_string(wstring& wstr, string& str)
+{
+	str = "";
+	for (int i = 0; i < wstr.size(); i++)
+	{
+		str = str + (char)wstr[i];
+	}
+}
+
+void wstring_to_file(wstring& wstr, char* filename)
+{
+	wstring::iterator it;
+	ofstream out(filename, ios::binary);
+	it = wstr.begin();
+	for (unsigned long i; it != wstr.end(); it++)
+	{
+		out.put((*it));
+	}
+	out.close();
+}
+
+void wstring_to_file(wstring& wstr, string filename)
+{
+	char* cstr = const_cast<char*>(filename.c_str());
+	wstring_to_file(wstr, cstr);
+}
+
+
+
+string get_path_bef(string in, string bef)
+{
+	int i;
+	i = in.rfind(bef);
+	if (string::npos==i)
+	{
+		return "";
+	}
+	else
+	{
+		return in.substr(0, i);
+	}
+}
+
+string get_path_add_bs(string in)
+{
+	char z;
+	z = in[in.size()];
+	if ('\0' == z && in.size() > 2);
+	{
+		z = in[in.size()-1];
+	}
+
+	if ('\\' == z)
+	{
+		return in;
+	}
+	else
+	{
+		return in + '\\';
+	}
+}
+
+char* get_path_add_bs(char* in)
+{
+	string str;
+	str = in;
+	str = get_path_add_bs(str);
+	char* cstr = const_cast<char*>(str.c_str());
+	return cstr;
+}
+
+
+int file_test(const char* filename)
+{
+	struct _stat fileStat;
+
+
+	if (-1 == _stat(filename, &fileStat))
+		return -1;//文件或文件夹不存在
+
+	if (fileStat.st_mode & _S_IFDIR)
+		return 1;//是文件夹
+	else
+		return 0;//是文件
+}
+
 
 
 int hide_file(char* in_file, char* out_file, int rgb)
 {
-	using namespace std;
-	//de_lsb_file(in_file, out_file, rgb);
+
+	if (-1 == file_test(in_file))
+		return -1;//输入文件不存在错误
+	if (-1 == file_test(out_file))
+		return -2;//输出文件不存在错误
+	
+	ifstream in;
+	if (1 == file_test(out_file))
+	{//输出参数是目录
+		string tempf = get_path_add_bs(out_file) ;
+		tempf = tempf + "temp_linalayer_temp.temp";
+		char* ctemp = const_cast<char*>(tempf.c_str());
+
+		de_lsb_file(in_file, ctemp, rgb);
+		in.open(ctemp, ios::binary);
+		
+	}
+	else
+	{
+		de_lsb_file(in_file, out_file, rgb);
+		in.open(out_file, ios::binary);
+	}
 
 
-
-	//_DEBUG ifstream in(out_file, ios::binary);
-	ifstream in(in_file, ios::binary);
 
 	//载入文件
 	if (!in)
@@ -235,47 +341,64 @@ int hide_file(char* in_file, char* out_file, int rgb)
 		cerr << "open error!" << endl;
 		abort();
 	}
-
-	in.seekg(0, ios::end);
-	//in.tellg();//计算文件大小
-	in.seekg(0, ios::beg);
-
+	
+	//文件写入 data 以供处理
 	wstring data;
-
 	for (unsigned long i; true != in.eof(); i++)
 	{
 		data.push_back(in.get());
 	}
-	cout << (unsigned int)data[0];
-	
 
 
-	ofstream out(out_file, ios::binary);
 
-	
-	wstring::iterator it;
 	
 	wstring b;
 
-
 	if (255==data[0] && 254==data[1])
 	{
+		//读取原文件名
+		wstring file_name;
+		size_t pos = data.rfind({ 254, 255, 152, 10, 20, 253, 254, 255 });
+		if (string::npos == pos)
+			return -2; //没有结尾标记
+
+		b = data.substr(2, pos -2);
+
+		size_t name_beg = b.rfind({ 254, 255 });
+		if (string::npos == name_beg)
+			return -3; //没有文件名标记
+
+		file_name = b.substr(name_beg + 2, b.size());
+		string file_name_str;
+		wstring_to_string(file_name, file_name_str);
+
+		//截取原文件数据
+		b = b.substr(0, name_beg);
 		
-		size_t pos = data.find_last_of({ 254, 255, 49, 48, 48, 46, 116, 120, 116, 254, 255, 152, 10, 20, 253, 254, 255, 255 });
+		//保存文件
+		if (1 == file_test(out_file))
+		{//要保存参数的是文件夹
+			out_file = get_path_add_bs(out_file);
+			cout << endl << "out_file:" << out_file<<endl;
+			wstring_to_file(b, out_file + file_name_str);
+
+		}
+		else
+		{//文件
+
+		}
+
+	
 		
-		b = data.substr(2, pos - 18-2);
-		//cout << "[" <<a << "]" << endl;
 
-		cout <<endl<<hex<< pos-18;
+
+
+		
+		
+
 	}
+	
 
-	it = b.begin();
-
-	for (unsigned long i; it != b.end(); it++)
-	{
-		out.put((*it));
-	}
-	out.close();
 
 }
 
@@ -309,8 +432,17 @@ int main()
 	//std::cout << "辅助功能测试";
 
 
-	//de_lsb_file("test\\rr_INfile1.png", "test\\outttttttt.txt", 3);
-	hide_file("test\\outttttttt.txt", "test\\outttttttt222222.txt",3);
+	//de_lsb_file("test\\b2.png", "test\\b2_out.exe", 3);
+	//de_lsb_file("test\\b3.png", "test\\b3_out.exe", 3);
+	//en_lsb_file("test\\b.png","test\\1.exe", "test\\b_insfile.png", 3);
+	//de_lsb_file("test\\2.png", "test\\22.exe", 3);
+	//de_lsb_file("test\\2.png", "test\\22.exe", 3);
+	hide_file("test\\b2.png", "test\\R",3);
+
+	
+
+
+
 	getchar();
 
 }
