@@ -287,7 +287,9 @@ char* get_path_add_bs(char* in)
 	string str;
 	str = in;
 	str = get_path_add_bs(str);
-	char* cstr = const_cast<char*>(str.c_str());
+
+	char* cstr;
+	cstr=const_cast<char*>(str.c_str());
 	return cstr;
 }
 
@@ -317,12 +319,20 @@ int hide_file(char* in_file, char* out_file, int rgb)
 		return -2;//输出文件不存在错误
 	
 	ifstream in;
+	char* ctemp;
+	
 	if (1 == file_test(out_file))
 	{//输出参数是目录
-		string tempf = get_path_add_bs(out_file) ;
-		tempf = tempf + "temp_linalayer_temp.temp";
-		char* ctemp = const_cast<char*>(tempf.c_str());
 
+		string tempf = "";
+	
+		cout << endl << "tempf:" << a << endl;
+		tempf = tempf+get_path_add_bs(out_file);
+		
+	
+		tempf = tempf + "temp_linalayer_temp.temp";
+		ctemp = const_cast<char*>(tempf.c_str());
+		
 		de_lsb_file(in_file, ctemp, rgb);
 		in.open(ctemp, ios::binary);
 		
@@ -349,11 +359,8 @@ int hide_file(char* in_file, char* out_file, int rgb)
 		data.push_back(in.get());
 	}
 
-
-
 	
 	wstring b;
-
 	if (255==data[0] && 254==data[1])
 	{
 		//读取原文件名
@@ -374,14 +381,15 @@ int hide_file(char* in_file, char* out_file, int rgb)
 
 		//截取原文件数据
 		b = b.substr(0, name_beg);
-		
+		in.close();
+
 		//保存文件
 		if (1 == file_test(out_file))
 		{//要保存参数的是文件夹
 			out_file = get_path_add_bs(out_file);
 			cout << endl << "out_file:" << out_file<<endl;
 			wstring_to_file(b, out_file + file_name_str);
-
+			remove(ctemp);
 		}
 		else
 		{//文件
@@ -437,10 +445,11 @@ int main()
 	//en_lsb_file("test\\b.png","test\\1.exe", "test\\b_insfile.png", 3);
 	//de_lsb_file("test\\2.png", "test\\22.exe", 3);
 	//de_lsb_file("test\\2.png", "test\\22.exe", 3);
-	hide_file("test\\b2.png", "test\\R",3);
+	//hide_file("test\\b2.png", "test\\R",3);
 
-	
-
+	char* a = "R";
+	a = get_path_add_bs(out_file);
+	cout << a;
 
 
 	getchar();
