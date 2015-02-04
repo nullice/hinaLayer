@@ -282,17 +282,7 @@ string get_path_add_bs(string in)
 	}
 }
 
-char* get_path_add_bs(char* in)
-{
-	string str;
-	str = in;
-	str = get_path_add_bs(str);
 
-	static char*cstr = const_cast<char*>(str.c_str());
-	cout << endl << cstr << endl;
-
-	return cstr;
-}
 
 
 
@@ -325,13 +315,10 @@ int hide_file(char* in_file, char* out_file, int rgb)
 	
 	if (1 == file_test(out_file))
 	{//输出参数是目录
-
 		string tempf = "";
-	
 
 		tempf = tempf+get_path_add_bs(out_file);
 		
-	
 		tempf = tempf + "temp_linalayer_temp.temp";
 		ctemp = const_cast<char*>(tempf.c_str());
 		
@@ -388,8 +375,10 @@ int hide_file(char* in_file, char* out_file, int rgb)
 		//保存文件
 		if (1 == file_test(out_file))
 		{//要保存参数的是文件夹
-			out_file = get_path_add_bs(out_file);
-			cout << endl << "out_file:" << out_file<<endl;
+			string a = out_file;
+			a=get_path_add_bs(a);
+			out_file = const_cast<char*>(a.c_str());
+			cout << endl << "out_file + file_name_str:" << out_file + file_name_str << endl;
 			wstring_to_file(b, out_file + file_name_str);
 			remove(ctemp);
 		}
@@ -440,11 +429,8 @@ int main()
 	//en_lsb_file("test\\b.png","test\\1.exe", "test\\b_insfile.png", 3);
 	//de_lsb_file("test\\2.png", "test\\22.exe", 3);
 	//de_lsb_file("test\\2.png", "test\\22.exe", 3);
-	//hide_file("test\\b2.png", "test\\R",3);
+	hide_file("test\\2.png", "test\\R",3);
 
-	char* a = "test\\R";
-	a = get_path_add_bs(a);
-	cout << a;
 
 
 	getchar();
