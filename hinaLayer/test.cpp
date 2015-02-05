@@ -575,6 +575,7 @@ int main(int argc, char *argv[])
 	{
 		comb = "en_mig";////en_mig  in_flie info_img out_flie  rgb 
 
+
 		if (com == comb)
 		{
 			std::cout << "en_mig\n";
