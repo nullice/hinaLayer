@@ -307,8 +307,7 @@ int hide_file(char* in_file, char* out_file, int rgb)
 
 	if (-1 == file_test(in_file))
 		return -1;//输入文件不存在错误
-	if (-1 == file_test(out_file))
-		return -2;//输出文件不存在错误
+
 	
 	ifstream in;
 	char* ctemp;
@@ -348,6 +347,13 @@ int hide_file(char* in_file, char* out_file, int rgb)
 		data.push_back(in.get());
 	}
 
+
+	in.close();
+	if (1 == file_test(out_file))
+	{
+		remove(ctemp);
+	}
+	
 	
 	wstring b;
 	if (255==data[0] && 254==data[1])
@@ -370,7 +376,9 @@ int hide_file(char* in_file, char* out_file, int rgb)
 
 		//截取原文件数据
 		b = b.substr(0, name_beg);
-		in.close();
+		
+		
+	
 
 		//保存文件
 		if (1 == file_test(out_file))
@@ -379,12 +387,15 @@ int hide_file(char* in_file, char* out_file, int rgb)
 			a=get_path_add_bs(a);
 			out_file = const_cast<char*>(a.c_str());
 			cout << endl << "out_file + file_name_str:" << out_file + file_name_str << endl;
-			wstring_to_file(b, out_file + file_name_str);
-			remove(ctemp);
-		}
-		else
-		{//文件
 
+			wstring_to_file(b, out_file + file_name_str);
+			return 0;
+		}
+		
+		if (0 == file_test(out_file))
+		{//文件
+			wstring_to_file(b, out_file);
+			return 0;
 		}
 
 
@@ -430,6 +441,8 @@ int main()
 	//de_lsb_file("test\\2.png", "test\\22.exe", 3);
 	//de_lsb_file("test\\2.png", "test\\22.exe", 3);
 	hide_file("test\\2.png", "test\\R",3);
+	hide_file("test\\2.png", "test\\R\\oo.exe", 3);
+
 
 
 
