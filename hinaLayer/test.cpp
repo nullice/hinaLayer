@@ -564,8 +564,6 @@ int main(int argc, char *argv[])
 	}
 
 
-	//test_dtf();
-	//bit_main();
 	string com;
 	string comb;
 
@@ -575,7 +573,7 @@ int main(int argc, char *argv[])
 	std::cout << "\n-----------------\n";
 	if (argc == 6)
 	{
-		comb = "en_mig";
+		comb = "en_mig";////en_mig  in_flie info_img out_flie  rgb 
 
 		if (com == comb)
 		{
