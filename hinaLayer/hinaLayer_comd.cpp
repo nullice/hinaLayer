@@ -249,17 +249,38 @@ void wstring_to_file(wstring& wstr, string filename)
 
 
 
-string get_path_bef(string in, string bef)
+string get_path_bef(string in, string bef, bool ig = false)
 {
 	int i;
 	i = in.rfind(bef);
 	if (string::npos==i)
 	{
-		return "";
+		if (ig)
+			return in;
+		else
+			return "";
 	}
 	else
 	{
 		return in.substr(0, i);
+	}
+}
+
+string get_path_last(string in, string last, bool ig = false)
+{
+	int i;
+	i = in.rfind(last);
+	if (string::npos == i)
+	{
+		if (ig)
+			return in;
+		else
+			return "";
+	
+	}
+	else
+	{
+		return in.substr(i+1, in.size()-1);
 	}
 }
 
@@ -302,12 +323,10 @@ int file_test(const char* filename)
 
 
 
-int hide_file(char* in_file, char* out_file, int rgb)
+int hide_file(char* in_file, char* out_file, int rgb, string& get_name, bool get_name_only = false )
 {
-
 	if (-1 == file_test(in_file))
 		return -1;//输入文件不存在错误
-
 	
 	ifstream in;
 	char* ctemp;
@@ -374,11 +393,16 @@ int hide_file(char* in_file, char* out_file, int rgb)
 		string file_name_str;
 		wstring_to_string(file_name, file_name_str);
 
+		//只返回文件名
+		get_name = file_name_str;
+		if (get_name_only)
+		{
+			return 2;
+		}
+
+
 		//截取原文件数据
 		b = b.substr(0, name_beg);
-		
-		
-	
 
 		//保存文件
 		if (1 == file_test(out_file))
@@ -397,15 +421,56 @@ int hide_file(char* in_file, char* out_file, int rgb)
 			wstring_to_file(b, out_file);
 			return 0;
 		}
+	}
+}
+
+int ins_hide_file(char* in_file, char* out_file, int rgb)
+{
+
+	if (-1 == file_test(in_file))
+		return -1;//输入文件不存在错误
 
 
+
+	
+	if (1 == file_test(out_file))
+	{//输出参数是目录
+		string tempf = "";
+		char* ctemp;
+		tempf = tempf + get_path_add_bs(out_file);
+		tempf = tempf + get_path_bef(get_path_last(in_file, "\\"), ".",true);
+		tempf = tempf + "_INfile1." + get_path_last(get_path_last(in_file, "\\"), ".");
+		cout << tempf;
+		return 0;
+		ctemp = const_cast<char*>(tempf.c_str());
+		out_file = ctemp;
 	}
 	
 
 
+	ifstream in(in_file,ios::binary);
+	if (!in)
+	{
+		cerr << "open error!" << endl;
+		abort();
+	}
+
+	ofstream out(out_file);
+	if (!out)
+	{
+		cerr << "write error!" << endl;
+		abort();
+	}
+
+
+	
+
+
+
+
+
+
 }
-
-
 
 
 
@@ -440,10 +505,14 @@ int main()
 	//en_lsb_file("test\\b.png","test\\1.exe", "test\\b_insfile.png", 3);
 	//de_lsb_file("test\\2.png", "test\\22.exe", 3);
 	//de_lsb_file("test\\2.png", "test\\22.exe", 3);
-	hide_file("test\\2.png", "test\\R",3);
-	hide_file("test\\2.png", "test\\R\\oo.exe", 3);
+	//string a;
+	//hide_file("test\\p4.png", "test\\R",3,a);
+	//cout << a << endl;
+	//hide_file("test\\2.png", "test\\R\\oo.exe", 3,a);
+	//cout << a << endl;
 
-
+	ins_hide_file("test\\EEE", "test\\R", 3);
+	//cout << get_path_last("test\\2.png", "\\");
 
 
 	getchar();
