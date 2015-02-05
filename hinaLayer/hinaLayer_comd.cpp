@@ -323,7 +323,7 @@ int file_test(const char* filename)
 
 
 
-int hide_file(char* in_file, char* out_file, int rgb, string& get_name, bool get_name_only = false )
+int re_hide_file(char* in_file, char* out_file, int rgb, string& get_name, bool get_name_only = false )
 {
 	if (-1 == file_test(in_file))
 		return -1;//输入文件不存在错误
@@ -410,9 +410,17 @@ int hide_file(char* in_file, char* out_file, int rgb, string& get_name, bool get
 			string a = out_file;
 			a=get_path_add_bs(a);
 			out_file = const_cast<char*>(a.c_str());
-			cout << endl << "out_file + file_name_str:" << out_file + file_name_str << endl;
+			//cout << endl << "out_file + file_name_str:" << out_file + file_name_str << endl;
 
-			wstring_to_file(b, out_file + file_name_str);
+
+			if (file_test((out_file + file_name_str).c_str()) < 0)
+				wstring_to_file(b, out_file + file_name_str);
+			else
+			{
+				file_name_str = "hina_" + file_name_str;
+				wstring_to_file(b, out_file + file_name_str);
+			}
+			
 			return 0;
 		}
 		
@@ -424,56 +432,126 @@ int hide_file(char* in_file, char* out_file, int rgb, string& get_name, bool get
 	}
 }
 
-int ins_hide_file(char* in_file, char* out_file, int rgb)
+int ins_hide_file(char* in_file, char* out_file, string& fina_name)
 {
 
 	if (-1 == file_test(in_file))
 		return -1;//输入文件不存在错误
 
-
-
-	
+	char* ctemp;
+	string tempf = "";
 	if (1 == file_test(out_file))
 	{//输出参数是目录
-		string tempf = "";
-		char* ctemp;
+
 		tempf = tempf + get_path_add_bs(out_file);
-		tempf = tempf + get_path_bef(get_path_last(in_file, "\\"), ".",true);
+		tempf = tempf + get_path_bef(get_path_last(in_file, "\\"), ".", true);
 		tempf = tempf + "_INfile1." + get_path_last(get_path_last(in_file, "\\"), ".");
-		cout << tempf;
-		return 0;
 		ctemp = const_cast<char*>(tempf.c_str());
 		out_file = ctemp;
+
 	}
-	
 
-
-	ifstream in(in_file,ios::binary);
+	fina_name = out_file;
+	ifstream in(in_file, ios::binary);
 	if (!in)
 	{
 		cerr << "open error!" << endl;
 		abort();
 	}
 
-	ofstream out(out_file);
+	ofstream out(out_file, ios::binary);
 	if (!out)
 	{
 		cerr << "write error!" << endl;
 		abort();
 	}
 
+	in.seekg(in.beg);
+	out.seekp(out.beg);
+	//写入头
+	out.put(255 );
+	out.put( 254 );
 
+	for (; false==in.eof();)
+	{
+		out.put(in.get());
+	}
+
+	out.put(254);
+	out.put(255);
+
+	out << get_path_last(in_file, "\\");
+
+	char endend[8] = { 254, 255, 152, 10, 20, 253, 254, 255 };
+	for (int i=0; i < 8; i++)
+	{
+		out.put(endend[i]);
+	}
+
+
+	in.close();
+	out.close();
+
+}
+
+int steg_write_file_lsb(char* in_file, char* info_file, char* out_file, int rgb)
+{
+
+	//temp file
+	char* ctemp;
+	string tempf = "";
 	
+	if (1 == file_test(out_file))
+	{
+		tempf = tempf + get_path_add_bs(out_file);
+	}
+	else
+	{
+		tempf = tempf + get_path_bef(out_file, "\\") + "\\";
+	}
+	tempf = tempf + "temp_linalayer_temp.temp";
+	ctemp = const_cast<char*>(tempf.c_str());
+
+
+	string fina_name;
+	int a;
 
 
 
+	a = ins_hide_file(info_file, ctemp, fina_name);
 
+	if (a < 0)
+	{
+		return a;
+	}
 
+	char* fine_name_c = const_cast<char*>(fina_name.c_str());
 
+	en_lsb_file(in_file, fine_name_c, out_file, rgb);
+	remove(fine_name_c);
+	return a;
 }
 
 
 
+string steg_get_name_lsb(char* in_file, int rgb)
+{
+	string name;
+	char* ctemp;
+	string tempf = in_file;
+	tempf = get_path_bef(tempf, "\\")+"\\temp_hinaLayer_name_.temp";
+	ctemp = const_cast<char*>(tempf.c_str());
+
+	re_hide_file(in_file, ctemp, rgb, name, true);
+	remove(ctemp);
+	return name;
+}
+
+int steg_out_file_lsb(char* in_file, char* out_file, int rgb)
+{
+	string name;
+	return re_hide_file(in_file, out_file, rgb, name);
+}
 
 
 int main()
@@ -511,9 +589,10 @@ int main()
 	//hide_file("test\\2.png", "test\\R\\oo.exe", 3,a);
 	//cout << a << endl;
 
-	ins_hide_file("test\\EEE", "test\\R", 3);
-	//cout << get_path_last("test\\2.png", "\\");
 
+	steg_write_file_lsb("test\\b.png", "test\\R\\1.zip", "test\\R\\b_out.png", 3);
+
+	steg_out_file_lsb("test\\R\\b_out.png", "test\\R",3);
 
 	getchar();
 
