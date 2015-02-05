@@ -494,6 +494,14 @@ int ins_hide_file(char* in_file, char* out_file, string& fina_name)
 
 }
 
+/// <summary>
+/// 在图片中隐写文件(LSB).
+/// </summary>
+/// <param name="in_file">要写入内容的图片文件.</param>
+/// <param name="info_file">欲写入图片的文件.</param>
+/// <param name="out_file">保存处理结果的图片文件.</param>
+/// <param name="rgb">用色彩通道（012顺序BGR，3为使用全部通道）.</param>
+/// <returns>int.</returns>
 int steg_write_file_lsb(char* in_file, char* info_file, char* out_file, int rgb)
 {
 
@@ -534,9 +542,15 @@ int steg_write_file_lsb(char* in_file, char* info_file, char* out_file, int rgb)
 
 
 
+/// <summary>
+/// 获取图片中隐写的文件的文件名(LSB).
+/// </summary>
+/// <param name="in_file">图片文件.</param>
+/// <param name="rgb">用色彩通道（012顺序BGR，3为使用全部通道）.</param>
+/// <returns>string.</returns>
 string steg_get_name_lsb(char* in_file, int rgb)
 {
-	string name;
+	string name="";
 	char* ctemp;
 	string tempf = in_file;
 	tempf = get_path_bef(tempf, "\\")+"\\temp_hinaLayer_name_.temp";
@@ -547,6 +561,13 @@ string steg_get_name_lsb(char* in_file, int rgb)
 	return name;
 }
 
+/// <summary>
+/// 导出图片中隐写的文件(LSB).
+/// </summary>
+/// <param name="in_file">图片文件.</param>
+/// <param name="out_file">保存导出内容的文件夹或文件.</param>
+/// <param name="rgb">使用色彩通道（012顺序BGR，3为使用全部通道）.</param>
+/// <returns>int.</returns>
 int steg_out_file_lsb(char* in_file, char* out_file, int rgb)
 {
 	string name;
