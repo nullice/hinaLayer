@@ -4,13 +4,3 @@
 #include <string>
 
 
-int atc()
-{
-
-
-
-
-
-
-
-}
