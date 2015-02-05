@@ -1,5 +1,5 @@
-
 #include "hinaLayer.h"
+#include "hinaLayer_comd.h"
 //C++
 #include <iostream>
 #include <string>
@@ -7,6 +7,65 @@
 #include<fstream>
 #include<math.h>
 using namespace std;
+
+
+
+int main(int argc, char *argv[])
+{
+	//en_eo_mask("test\\rr.jpg", "test\aaa.png", "test\out.png",2);
+	//de_eo_mask("test\out.png", "test\out2.png", 3);
+	//std::cout<<"ÆæÅ¼Î»Ð´ÈëË®Ó¡²âÊÔ"
+
+	//en_eo_file("test\\rr.jpg", "test\\test.txt", "test\\out.png", 3);
+	//de_eo_file("test\\out.png", "test\\out2.txt", 3);
+	//std::cout<<"ÆæÅ¼Î»Ð´ÈëÎÄ¼þ²âÊÔ"
+
+	//en_lsb_file("test\\rr.jpg", "test\\test.txt", "test\\out.png", 3);
+	//de_lsb_file("test\\out.png", "test\\out2.txt", 3);
+	//std::cout<<"ÏñËØµÍÎ»Î»Ð´ÈëÎÄ¼þ²âÊÔ"
+
+	//en_dtf_mask("test\\oo.jpg", "test\\pp2.png", "test\\out.png", 2);
+	//de_dtf_mask("test\\out.png", "test\\out2.png", 3);
+	//std::cout << "dtfÆµÓòÐ´ÈëË®Ó¡²âÊÔ";
+
+	//resize("test\\oo.jpg", "test\\out.jpg",303,230);
+	//mirrorX("test\\out.jpg", "test\\out2.jpg");
+	//mirrorY("test\\out2.jpg", "test\\out3.jpg");
+	//std::cout << "¸¨Öú¹¦ÄÜ²âÊÔ";
+
+
+	//de_lsb_file("test\\b2.png", "test\\b2_out.exe", 3);
+	//de_lsb_file("test\\b3.png", "test\\b3_out.exe", 3);
+	//en_lsb_file("test\\b.png","test\\1.exe", "test\\b_insfile.png", 3);
+	//de_lsb_file("test\\2.png", "test\\22.exe", 3);
+	//de_lsb_file("test\\2.png", "test\\22.exe", 3);
+	//string a;
+	//hide_file("test\\p4.png", "test\\R",3,a);
+	//cout << a << endl;
+	//hide_file("test\\2.png", "test\\R\\oo.exe", 3,a);
+	//cout << a << endl;
+
+
+	steg_write_file_lsb("test\\b.png", "test\\R\\1.zip", "test\\R\\b_out.png", 3);
+
+	steg_out_file_lsb("test\\R\\b_out.png", "test\\R", 3);
+	getchar();
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*

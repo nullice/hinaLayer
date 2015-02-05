@@ -24,6 +24,9 @@
     <ClCompile Include="hinaLayer_comd.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="hinaLayer_Console.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hinaLayer.h">
