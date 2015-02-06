@@ -237,7 +237,7 @@ void read_dtf(char* in_file, int rgb)
 	hl.open_file(in_file);
 	hl.dtf_make(rgb);
 	hl.dtf_print(rgb);
-	hl.show_fdomain("DTF∆µ”Ú"+to_string(rgb));
+	hl.show_fdomain("DTF∆µ”Ú"+std::to_string(rgb));
 }
 
 
