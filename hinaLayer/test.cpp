@@ -47,6 +47,45 @@ int act()
 
 
 
+/*
+[奇偶位]
+en_eo_mask		in_file		info_file	out_file	rgb_	(en_mig)	在图片奇偶位上写入水印
+en_eo_file		in_file		info_file	out_file	rgb_	(en_bin)	在图片奇偶位上写入文件.
+de_eo_mask		in_file		out_file	rgb_				(de_mig)	导出图片奇偶位水印.
+de_eo_file		in_file		out_file	rgb_				(de_bin)	导出图片奇偶位文件.
+read_eo			in_file		rgb								(read_mig)
+
+[低像素位]
+en_lsb_file		in_file		info_file	out_file	rgb_	(en_bin_A)	在图片像素低位上写入文件.
+de_lsb_file		in_file		out_file	rgb_				(de_bin_A)	导出图片像素低位文件.
+
+[频域]
+en_dtf_mask		in_file		info_file	out_file	rgb		(en_dtf)	在图片DTF频域上写入水印.
+de_dtf_mask		in_file		out_file	rgb					(de_dtf)	导出图片DTF频域水印.
+read_dtf		in_file		rgb
+read_dtf_3		in_file
+
+[辅助功能]
+resize			in_file		out_file	w			h					重设图像大小（缩放）.
+mirrorX			in_file		out_file						(m_x)		图片X轴镜像（水平翻转）.
+mirrorY			in_file		out_file						(m_y)		图片Y轴镜像（垂直翻转）.
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 int main(int argc, char *argv[])
 {
@@ -265,6 +304,28 @@ int main(int argc, char *argv[])
 			resize(argv[2], argv[3], atoi(argv[4]), atoi(argv[5]));
 		}
 	}
+
+	if (argc == 4)
+	{//mirrorX in_f out_f
+		comb = "mirrorX";
+		comb2 = "m_x";
+		if (com == comb || com == comb2)
+		{
+			std::cout << "m_x(mirrorX)\n";
+			mirrorX(argv[2], argv[2]);
+		}
+	}
+	if (argc == 4)
+	{//mirrorX in_f out_f
+		comb = "mirrorY";
+		comb2 = "m_y";
+		if (com == comb || com == comb2)
+		{
+			std::cout << "m_y(mirrorY)\n";
+			mirrorY(argv[2], argv[2]);
+		}
+	}
+
 
 	if (argc == 6)
 	{//steg_write_file_lsb  rgb
