@@ -1,12 +1,11 @@
+#include <opencv2/core/core.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
 #include "hinaLayer.h"
 #include "hinaLayer_comd.h"
 #include <iostream>
 #include <string>
-
-
-#include <opencv2/core/core.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
 
 #include <iostream>
 #include <string>
@@ -15,21 +14,7 @@
 #include<math.h>
 
 
-// 这几个依赖库文件必须要添加，   
-// 因为这些是OpenCV所使用的第三方库   
-#pragma comment( lib, "libjasperd.lib" )   
-#pragma comment( lib, "libjpegd.lib" )   
-#pragma comment( lib, "libpngd.lib" )   
-#pragma comment( lib, "libtiffd.lib" )   
-#pragma comment( lib, "zlibd.lib" )  
 
-// 这里根据你的程序添加依赖库文件   
-#pragma comment( lib, "opencv_core2410.lib" )   
-#pragma comment( lib, "opencv_imgproc2410.lib" )   
-#pragma comment( lib, "opencv_highgui2410.lib" )   
-// 添加这两个是因为win32程序   
-#pragma comment( lib, "vfw32.lib" )   
-#pragma comment( lib, "comctl32.lib" )
 
 /*
 [自动隐写]
@@ -343,14 +328,6 @@ int act(int argc, char *argv[])
 	}
 	return 0;
 }
-
-
-int main()
-{
-	std::cout << 11;
-
-}
-
 
 
 

@@ -521,8 +521,6 @@ unsigned long hinaLayer::lsb_get_max(int rgb)
 int hinaLayer::lsb_get_deep(char* file, int rgb)
 {
 	ifstream in(file, ios::binary);
-	int tmp;//
-	char* buffer;
 	unsigned long  size;
 
 	in.seekg(0, ios::end);
@@ -1067,8 +1065,7 @@ void bit_f_write(char* filename, Mat& image, int rgb)
 		cerr << "open error!" << endl;
 		abort();
 	}
-	int tmp;
-	char* buffer;
+
 	long size;
 
 	in.seekg(0, ios::end);
@@ -1150,8 +1147,7 @@ void bit_f_write_A(char* filename, Mat& image, int rgb)
 		abort();
 	}
 
-	int tmp;//
-	char* buffer;
+
 	unsigned long  size;
 
 	in.seekg(0, ios::end);

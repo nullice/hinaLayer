@@ -263,7 +263,7 @@ void wstring_to_file(wstring& wstr, char* filename)
 	wstring::iterator it;
 	ofstream out(filename, ios::binary);
 	it = wstr.begin();
-	for (unsigned long i; it != wstr.end(); it++)
+	for (; it != wstr.end(); it++)
 	{
 		out.put((*it));
 	}
@@ -317,7 +317,7 @@ string get_path_add_bs(string in)
 {
 	char z;
 	z = in[in.size()];
-	if ('\0' == z && in.size() > 2);
+	if ('\0' == z && in.size() > 2)
 	{
 		z = in[in.size()-1];
 	}
@@ -500,7 +500,7 @@ int ins_hide_file(char* in_file, char* out_file, string& fina_name)
 	in.seekg(in.beg);
 	out.seekp(out.beg);
 	//Ğ´ÈëÍ·
-	out.put(255 );
+	out.put( 255 );
 	out.put( 254 );
 
 	for (; false==in.eof();)
