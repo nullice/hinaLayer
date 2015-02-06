@@ -565,78 +565,84 @@ int main(int argc, char *argv[])
 
 
 	string com;
-	string comb;
+	string comb,comb2;
 
 	if (argc >= 2)
 		com = argv[1];
 
 	std::cout << "\n-----------------\n";
 	if (argc == 6)
-	{
-		comb = "en_mig";////en_mig  in_flie info_img out_flie  rgb 
+	{//en_mig  in_flie info_img out_flie  rgb 
+		comb = "en_mig";
+		comb2 = "en_eo_mask";
 
-
-		if (com == comb)
+		if (com == comb || com == comb2 || com == comb || com == comb22)
 		{
-			std::cout << "en_mig\n";
-			com_en_mig(argv[2], argv[3], argv[4], atoi(argv[5]));
+			std::cout << "[en_eo_mask(en_mig)]\n";
+			en_eo_mask(argv[2], argv[3], argv[4], atoi(argv[5]));
 		}
 	}
 
-
 	if (argc == 4)
-	{
+	{//read_mig in_flie rgb
 		comb = "read_mig";
-		if (com == comb)
+		comb2 = "read_eo";
+		if (com == comb || com == comb2)
 		{
-			std::cout << "read_mig\n";
-			com_read_mig(argv[2], atoi(argv[3]));
+			std::cout << "[read_eo(read_mig)]\n";
+			read_eo(argv[2], atoi(argv[3]));
 		}
 	}
 
 	if (argc == 5)
-	{
+	{//de_mig  in_flie  out_flie rgb
 		comb = "de_mig";
-		if (com == comb)
+		comb2 = "de_eo_mask";
+		if (com == comb || com == comb2)
 		{
-			std::cout << "de_mig\n";
-			com_de_mig(argv[2], argv[3], atoi(argv[4]));
+			std::cout << "de_eo_mask(de_mig)\n";
+			de_eo_mask(argv[2], argv[3], atoi(argv[4]));
 		}
 	}
 
 	if (argc == 5)
-	{
+	{//en_bin in_image_flie  info_bin 
 		comb = "en_bin";
-		if (com == comb)
+		comb2 = "en_eo_file";
+		if (com == comb || com == comb2)
 		{
-			std::cout << "en_bin\n";
-			com_en_bin(argv[2], argv[3], argv[4]);
+			std::cout << "en_eo_file(en_bin)\n";
+			en_eo_file(argv[2], argv[3], argv[4]);
 		}
 	}
+
 	if (argc == 5)
-	{
+	{//en_bin_A in_image_flie  info_bin 
 		comb = "en_bin_A";
-		if (com == comb)
+		comb2 = "en_lsb_file";
+		if (com == comb || com == comb2)
 		{
-			std::cout << "en_bin_A\n";
-			com_en_bin_A(argv[2], argv[3], argv[4]);
+			std::cout << "en_lsb_file(en_bin_A)\n";
+			en_lsb_file(argv[2], argv[3], argv[4]);
 		}
 	}
 
 	if (argc == 4)
-	{
+	{//de_bin in_image_flie	out_file
 		comb = "de_bin";
-		if (com == comb)
+		comb2 = "de_eo_file";
+		if (com == comb || com == comb2)
 		{
-			std::cout << "de_bin\n";
-			com_de_bin(argv[2], argv[3]);
+			std::cout << "de_eo_file(de_bin)\n";
+			de_eo_file(argv[2], argv[3]);
 		}
 	}
 
 	if (argc == 4)
 	{
 		comb = "de_bin_A";
-		if (com == comb)
+		comb2 = "de_lsb_file";
+		if (com == comb || com == comb2)
 		{
 			std::cout << "de_bin_A\n";
 			com_de_bin_A(argv[2], argv[3]);
@@ -648,7 +654,7 @@ int main(int argc, char *argv[])
 	if (argc == 4)
 	{
 		comb = "read_dtf";
-		if (com == comb)
+		if (com == comb || com == comb2)
 		{
 			std::cout << "read_dtf\n";
 			com_read_dtf(argv[2], atoi(argv[3]));
@@ -658,7 +664,7 @@ int main(int argc, char *argv[])
 	if (argc == 3)
 	{
 		comb = "read_dtf_3";
-		if (com == comb)
+		if (com == comb || com == comb2)
 		{
 			std::cout << "read_dtf_3\n";
 			com_read_dtf_3(argv[2]);
@@ -668,7 +674,7 @@ int main(int argc, char *argv[])
 	if (argc == 6)
 	{
 		comb = "en_dtf";
-		if (com == comb)
+		if (com == comb || com == comb2)
 		{
 			std::cout << "en_dtf\n";
 			com_en_dtf(argv[2], argv[3], argv[4], atoi(argv[5]));
@@ -678,7 +684,7 @@ int main(int argc, char *argv[])
 	if (argc == 5)
 	{
 		comb = "de_dtf";
-		if (com == comb)
+		if (com == comb || com == comb2)
 		{
 			std::cout << "de_dtf\n";
 			com_de_dtf(argv[2], argv[3], atoi(argv[4]));
@@ -688,7 +694,7 @@ int main(int argc, char *argv[])
 	if (argc == 5)
 	{
 		comb = "en_dtf_3";
-		if (com == comb)
+		if (com == comb || com == comb2)
 		{
 			std::cout << "en_dtf_3\n";
 			com_en_dtf_3(argv[2], argv[3], argv[4]);
@@ -699,7 +705,7 @@ int main(int argc, char *argv[])
 	if (argc == 4)
 	{
 		comb = "de_dtf_3";
-		if (com == comb)
+		if (com == comb || com == comb2)
 		{
 			std::cout << "de_dtf_3\n";
 			com_de_dtf_3(argv[2], argv[3]);
@@ -709,7 +715,7 @@ int main(int argc, char *argv[])
 	if (argc == 6)
 	{
 		comb = "resize";
-		if (com == comb)
+		if (com == comb || com == comb2)
 		{
 			std::cout << "resize\n";
 			com_resize(argv[2], argv[3], atoi(argv[4]), atoi(argv[5]));

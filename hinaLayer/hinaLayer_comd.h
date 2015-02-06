@@ -130,6 +130,13 @@ string steg_get_name_lsb(char* in_file, int rgb = 3);
 /// <returns>int.</returns>
 int steg_out_file_lsb(char* in_file, char* out_file, int rgb = 3);
 
+/// <summary>
+/// 在窗口中预览图片的奇偶位图像.
+/// </summary>
+/// <param name="in_file">要查看的图片文件.</param>
+/// <param name="rgb">使用色彩通道（012顺序BGR，3为使用全部通道).</param>
+void read_eo(char* in_file, int rgb = 3);
+
 
 /// <summary>
 /// 判断文件类型，返回-1为不存在，0为文件，1为文件夹.
