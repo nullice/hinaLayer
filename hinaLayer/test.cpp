@@ -615,6 +615,17 @@ int main(int argc, char *argv[])
 			en_eo_file(argv[2], argv[3], argv[4]);
 		}
 	}
+	if (argc == 6)
+	{//== en_bin in_image_flie  info_bin rgb
+		comb = "en_bin";
+		comb2 = "en_eo_file";
+		if (com == comb || com == comb2)
+		{
+			std::cout << "en_eo_file(en_bin)\n";
+			en_eo_file(argv[2], argv[3], argv[4], atoi(argv[5]));
+		}
+	}
+
 
 	if (argc == 5)
 	{//en_bin_A in_image_flie  info_bin 
@@ -626,6 +637,17 @@ int main(int argc, char *argv[])
 			en_lsb_file(argv[2], argv[3], argv[4]);
 		}
 	}
+	if (argc == 6)
+	{//==en_bin_A in_image_flie  info_bin  rgb
+		comb = "en_bin_A";
+		comb2 = "en_lsb_file";
+		if (com == comb || com == comb2)
+		{
+			std::cout << "en_lsb_file(en_bin_A)\n";
+			en_lsb_file(argv[2], argv[3], argv[4], atoi(argv[5]));
+		}
+	}
+
 
 	if (argc == 4)
 	{//de_bin in_image_flie	out_file
@@ -637,99 +659,160 @@ int main(int argc, char *argv[])
 			de_eo_file(argv[2], argv[3]);
 		}
 	}
+	if (argc == 5)
+	{//== de_bin in_image_flie	out_file rgb
+		comb = "de_bin";
+		comb2 = "de_eo_file";
+		if (com == comb || com == comb2)
+		{
+			std::cout << "de_eo_file(de_bin)\n";
+			de_eo_file(argv[2], argv[3], atoi(argv[4]));
+		}
+	}
+
+
+
 
 	if (argc == 4)
-	{
+	{//en_bin_A in_image_flie out_file
 		comb = "de_bin_A";
 		comb2 = "de_lsb_file";
 		if (com == comb || com == comb2)
 		{
-			std::cout << "de_bin_A\n";
-			com_de_bin_A(argv[2], argv[3]);
+			std::cout << "de_lsb_file(de_bin_A)\n";
+			de_lsb_file(argv[2], argv[3]);
+		}
+	}
+	if (argc == 5)
+	{//== en_bin_A in_image_flie out_file rgb
+		comb = "de_bin_A";
+		comb2 = "de_lsb_file";
+		if (com == comb || com == comb2)
+		{
+			std::cout << "de_lsb_file(de_bin_A)\n";
+			de_lsb_file(argv[2], argv[3], atoi(argv[4]));
 		}
 	}
 
 
-
 	if (argc == 4)
-	{
+	{//read_dtf in_flie rgb 
 		comb = "read_dtf";
+		comb2 = "read_dtf";
 		if (com == comb || com == comb2)
 		{
-			std::cout << "read_dtf\n";
-			com_read_dtf(argv[2], atoi(argv[3]));
+			std::cout << "read_dtf(read_dtf)\n";
+			read_dtf(argv[2], atoi(argv[3]));
 		}
 	}
 
 	if (argc == 3)
-	{
+	{//read_dtf_3 in_flie 
 		comb = "read_dtf_3";
-		if (com == comb || com == comb2)
+		if (com == comb)
 		{
 			std::cout << "read_dtf_3\n";
-			com_read_dtf_3(argv[2]);
+			read_dtf(argv[2],3);
 		}
 	}
 
 	if (argc == 6)
-	{
+	{//en_dtf in_f info_f out_f rgb 
 		comb = "en_dtf";
+		comb2 = "en_dtf_mask";
 		if (com == comb || com == comb2)
 		{
-			std::cout << "en_dtf\n";
-			com_en_dtf(argv[2], argv[3], argv[4], atoi(argv[5]));
+			std::cout << "en_dtf_mask(en_dtf)\n";
+			en_dtf_mask(argv[2], argv[3], argv[4], atoi(argv[5]));
 		}
 	}
 
 	if (argc == 5)
-	{
+	{//de_dtf in_f out_f rgb 
 		comb = "de_dtf";
+		comb2 = "de_dtf_mask";
 		if (com == comb || com == comb2)
 		{
-			std::cout << "de_dtf\n";
-			com_de_dtf(argv[2], argv[3], atoi(argv[4]));
+			std::cout << "de_dtf_mask(de_dtf)\n";
+			de_dtf_mask(argv[2], argv[3], atoi(argv[4]));
 		}
 	}
 
 	if (argc == 5)
-	{
+	{//en_dtf_3 in_f info_f out_f  
 		comb = "en_dtf_3";
-		if (com == comb || com == comb2)
+		if (com == comb)
 		{
 			std::cout << "en_dtf_3\n";
-			com_en_dtf_3(argv[2], argv[3], argv[4]);
+			en_dtf_mask(argv[2], argv[3], argv[4], 3);
 		}
 	}
 
 
 	if (argc == 4)
-	{
+	{//de_dtf_3  in_f out_f 
 		comb = "de_dtf_3";
-		if (com == comb || com == comb2)
+		if (com == comb)
 		{
 			std::cout << "de_dtf_3\n";
-			com_de_dtf_3(argv[2], argv[3]);
+			de_dtf_mask(argv[2], argv[3], 3);
 		}
 	}
 
 	if (argc == 6)
-	{
+	{//resize in_f out_f w h
 		comb = "resize";
-		if (com == comb || com == comb2)
+		if (com == comb)
 		{
 			std::cout << "resize\n";
-			com_resize(argv[2], argv[3], atoi(argv[4]), atoi(argv[5]));
+			resize(argv[2], argv[3], atoi(argv[4]), atoi(argv[5]));
+		}
+	}
+
+	if (argc == 6)
+	{//steg_write_file_lsb  rgb
+		comb = "steg_write_file_lsb";
+		comb2 = "s_in";
+		if (com == comb || com == comb2)
+		{
+			std::cout << "s_in(steg_write_file_lsb)\n";
+			steg_write_file_lsb(argv[2], argv[3], argv[4], atoi(argv[5]));
+		}
+	}
+	if (argc == 5)
+	{// ==steg_write_file_lsb  
+		comb = "steg_write_file_lsb";
+		comb2 = "s_in";
+		if (com == comb || com == comb2)
+		{
+			std::cout << "s_in(steg_write_file_lsb)\n";
+			steg_write_file_lsb(argv[2], argv[3], argv[4], 3);
 		}
 	}
 
 
+	if (argc == 5)
+	{//steg_write_file_lsb  rgb
+		comb = "steg_out_file_lsb";
+		comb2 = "s_out";
+		if (com == comb || com == comb2)
+		{
+			std::cout << "s_out(steg_out_file_lsb)\n";
+			steg_out_file_lsb(argv[2], argv[3], atoi(argv[4]));
+		}
+	}
+	if (argc == 4)
+	{//== steg_write_file_lsb 
+		comb = "steg_out_file_lsb";
+		comb2 = "s_out";
+		if (com == comb || com == comb2)
+		{
+			std::cout << "s_out(steg_out_file_lsb)\n";
+			steg_out_file_lsb(argv[2], argv[3], 3);
+		}
+	}
 
-
-
-
-
-
-
+	
 
 
 
@@ -774,9 +857,9 @@ int main(int argc, char *argv[])
 	//cout << a << endl;
 
 
-	steg_write_file_lsb("test\\b.png", "test\\R\\1.zip", "test\\R\\b_out.png", 3);
+	//steg_write_file_lsb("test\\b.png", "test\\R\\1.zip", "test\\R\\b_out.png", 3);
 
-	steg_out_file_lsb("test\\R\\b_out.png", "test\\R", 3);
+	//steg_out_file_lsb("test\\R\\b_out.png", "test\\R", 3);
 	getchar();
 
 }

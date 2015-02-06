@@ -213,10 +213,6 @@ void mirrorX(char* in_file, char* out_file)
 	hl.out_file(out_file);
 }
 
-
-
-
-
 /// <summary>
 /// 在窗口中预览图片的奇偶位图像.
 /// </summary>
@@ -230,6 +226,19 @@ void read_eo(char* in_file, int rgb)
 }
 
 
+/// <summary>
+/// 在窗口中预览图片的 DTF频域 图像.
+/// </summary>
+/// <param name="in_file">要查看的图片文件.</param>
+/// <param name="rgb">使用色彩通道（012顺序BGR，3为使用全部通道).</param>
+void read_dtf(char* in_file, int rgb)
+{
+	hinaLayer hl;
+	hl.open_file(in_file);
+	hl.dtf_make(rgb);
+	hl.dtf_print(rgb);
+	hl.show_fdomain("DTF频域"+to_string(rgb));
+}
 
 
 
