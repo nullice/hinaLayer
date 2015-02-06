@@ -1,3 +1,4 @@
+/*
 #include "hinaLayer.h"
 #include "hinaLayer_comd.h"
 //C++
@@ -7,7 +8,7 @@
 #include<fstream>
 #include<math.h>
 using namespace std;
-
+*/
 
 
 
@@ -44,11 +45,10 @@ using namespace std;
 
 
 
-int TEST_main(int argc, char *argv[])
-{
-	int act(int argc, char *argv[]);
-	act(argc, argv);
-	return 0;
+
+	//int act(int argc, char *argv[]);
+	//act(argc, argv);
+	//return 0;
 
 	//en_eo_mask("test\\rr.jpg", "test\aaa.png", "test\out.png",2);
 	//de_eo_mask("test\out.png", "test\out2.png", 3);
@@ -88,7 +88,6 @@ int TEST_main(int argc, char *argv[])
 
 	//steg_out_file_lsb("test\\R\\b_out.png", "test\\R", 3);
 
-}
 
 
 

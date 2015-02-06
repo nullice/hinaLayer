@@ -359,7 +359,7 @@ int re_hide_file(char* in_file, char* out_file, int rgb, string& get_name, bool 
 		return -1;//输入文件不存在错误
 	
 	ifstream in;
-	char* ctemp;
+	char* ctemp="";
 	
 	if (1 == file_test(out_file))
 	{//输出参数是目录
@@ -391,7 +391,7 @@ int re_hide_file(char* in_file, char* out_file, int rgb, string& get_name, bool 
 	
 	//文件写入 data 以供处理
 	wstring data;
-	for (unsigned long i; true != in.eof(); i++)
+	for (unsigned long i=0; true != in.eof(); i++)
 	{
 		data.push_back(in.get());
 	}
@@ -460,6 +460,7 @@ int re_hide_file(char* in_file, char* out_file, int rgb, string& get_name, bool 
 			return 0;
 		}
 	}
+	return 0;
 }
 
 int ins_hide_file(char* in_file, char* out_file, string& fina_name)
@@ -521,7 +522,7 @@ int ins_hide_file(char* in_file, char* out_file, string& fina_name)
 
 	in.close();
 	out.close();
-
+	return 0;
 }
 
 /// <summary>

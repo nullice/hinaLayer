@@ -333,6 +333,7 @@ int hinaLayer::dtf_write_mask(Mat& mask, int rgb /*= 3*/)
 	{
 		writeINFO(mmat[rgb], mask);
 	}
+	return 0;
 }
 
 /// <summary>

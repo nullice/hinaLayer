@@ -14,6 +14,7 @@
 #include<fstream>
 #include<math.h>
 
+
 // 这几个依赖库文件必须要添加，   
 // 因为这些是OpenCV所使用的第三方库   
 #pragma comment( lib, "libjasperd.lib" )   
@@ -21,20 +22,14 @@
 #pragma comment( lib, "libpngd.lib" )   
 #pragma comment( lib, "libtiffd.lib" )   
 #pragma comment( lib, "zlibd.lib" )  
-//#pragma comment( lib, "IlmImfd.lib" )  
-
 
 // 这里根据你的程序添加依赖库文件   
-
-#pragma comment( lib, "opencv_highgui2410.lib" )   
 #pragma comment( lib, "opencv_core2410.lib" )   
 #pragma comment( lib, "opencv_imgproc2410.lib" )   
-
-
+#pragma comment( lib, "opencv_highgui2410.lib" )   
 // 添加这两个是因为win32程序   
 #pragma comment( lib, "vfw32.lib" )   
-#pragma comment( lib, "comctl32.lib" )   
-
+#pragma comment( lib, "comctl32.lib" )
 
 /*
 [自动隐写]
@@ -350,15 +345,13 @@ int act(int argc, char *argv[])
 }
 
 
-
-
-
-int main(int argc, char *argv[])
+int main()
 {
-	int act(int argc, char *argv[]);
-	act(argc, argv);
-	return 0;
+	std::cout << 11;
+
 }
+
+
 
 
 
