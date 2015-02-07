@@ -1,15 +1,11 @@
 #ifndef HINALAYER_H
 #define HINALAYER_H
 
-
 //openCV 
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 using namespace cv;
-
-
-
 
 /// <summary>
 /// Class hinaLayer.
@@ -54,8 +50,6 @@ public:
 
 private:
 	void dtf_to_image(int rgb = 3);//DTF中间矩阵（mmat）转换到图像数据矩阵(image)
-
-	//out
 };
 
 

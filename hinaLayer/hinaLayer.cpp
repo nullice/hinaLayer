@@ -1,16 +1,4 @@
-// ***********************************************************************
-// Assembly         : 
-// Author           : 语冰
-// Created          : 01-28-2015
-//
-// Last Modified By : 语冰
-// Last Modified On : 02-02-2015
-// ***********************************************************************
-// <copyright file="hinaLayer.cpp" company="">
-//     Copyright (c) . All rights reserved.
-// </copyright>
-// <summary></summary>
-// ***********************************************************************
+
 #include "hinaLayer.h"
 #include <iostream>
 #include <string>
@@ -26,10 +14,7 @@ using namespace cv;
 using namespace std;
 
 
-
 //载入
-
-
 
 /// <summary>
 /// 打开文件以创建 hinaLayer 操作对象
