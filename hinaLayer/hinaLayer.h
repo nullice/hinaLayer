@@ -37,8 +37,8 @@ public:
 	int	 dtf_write_mask(char* mask_file, int rgb = 3);//在 DTF中间矩阵（mask.png -> mmat） 写入水印图像文件；指定通道
 
 	void eo_to_image(int rgb = 3);//奇偶位可视化，图像转换到图像数据矩阵(image)，
-	void eo_write_mask(char* mask_file, int rgb = 3, int auto_size = 0);//在图像奇偶位上写入水印（mask -> image）；指定通道；auto_size 设置是否自动缩放水印大小
-	void eo_write_mask(Mat& mask, int rgb = 3, int auto_size = 0);//在图像奇偶位上写入水印（mask.png -> image）；指定通道；auto_size 设置是否自动缩放水印大小
+	void eo_write_mask(char* mask_file, int rgb = 3, int auto_size = 1);//在图像奇偶位上写入水印（mask -> image）；指定通道；auto_size 设置是否自动缩放水印大小
+	void eo_write_mask(Mat& mask, int rgb = 3, int auto_size = 1);//在图像奇偶位上写入水印（mask.png -> image）；指定通道；auto_size 设置是否自动缩放水印大小
 	void eo_write_file(char* info_file, int rgb = 3);//在图像奇偶位上写入文件二进制数据（file -> image）；指定通道
 	void eo_out_file(char* out_file, int rgb = 3);//把图像奇偶位数据作为二进制数据文件写出（image -> file）；指定通道
 

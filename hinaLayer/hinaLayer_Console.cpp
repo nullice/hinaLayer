@@ -36,9 +36,6 @@ void main(int argc, char *argv[])
 }
 
 
-
-
-
 /*
 [自动隐写]
 s_in			in_file		info_file		out_file	rgb_	(steg_write_file_lsb)	在图片中隐写文件(LSB).
