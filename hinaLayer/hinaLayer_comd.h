@@ -1,7 +1,7 @@
 #ifndef HINALAYER_COMD_H
 #define HINALAYER_COMD_H
 
-
+#include <string>
 
 
 /// <summary>
@@ -119,7 +119,7 @@ int steg_write_file_lsb(char* in_file, char* info_file, char* out_file, int rgb 
 /// <param name="in_file">图片文件.</param>
 /// <param name="rgb">用色彩通道（012顺序BGR，3为使用全部通道）.</param>
 /// <returns>string.</returns>
-string steg_get_name_lsb(char* in_file, int rgb = 3);
+std::string steg_get_name_lsb(char* in_file, int rgb = 3);
 
 /// <summary>
 /// 导出图片中隐写的文件(LSB).
