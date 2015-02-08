@@ -11,26 +11,33 @@ Window GUI App [imageIN](http://nullice.com/imagein) used hinaLayer. ( here hina
 
 
 ##介绍
-hinaLayer 是一个使用 C++ 语言，依赖 openCV 库的非常简单的隐写工具<br>
+hinaLayer 是一个使用 C++ 语言，依赖 openCV 库的非常简单的图片隐写工具<br>
 原本是为一个有着极友好界面的图片隐写工具 [imageIN](http://nullice.com/imagein) 写的临时用的组件
 后来 [imageIN](http://nullice.com/imagein) 源码不幸丢失了:no_mouth:<br>
 [imageIN](http://nullice.com/imagein)的截图：<br>
 ![](http://nullice.com/wordpress/wp-content/uploads/2014/11/anime.gif)<br>
 
 
+##图片隐写
+图片隐写是在图片内容本身添加信息，你可以图片中写入不可见的水印或者任何类型的文件
+片<br>![图片](https://github.com/nullice/hinaLayer/raw/master/Help/in.png)
+
 ##功能
 
 **图片奇偶位写入、导出文件、水印**
 <br>
-根据图片像素值的奇偶性写入文件或水印
+根据图片像素值的奇偶性写入文件或水印<br>
+![图片奇偶位写入水印](https://github.com/nullice/hinaLayer/raw/master/Help/eo_.png)
 
 **图片像素低位写入、导出文件**
 <br>
-根据图像像素低位内容写入信息，即 LSB 隐写
+根据图像像素低位内容写入信息，即 LSB 隐写<br>
+![图片像素低位写入、导出文件](https://github.com/nullice/hinaLayer/raw/master/Help/lsb_.png)
 
 **在图片频域（DTF）写入、导出水印**
 <br>
-把图片转换到 DTF 频域，并写入水印图片
+把图片转换到 DTF 频域，并写入水印图片<br>
+![ DTF 频域写入水印图片](https://github.com/nullice/hinaLayer/raw/master/Help/dtf_.png)
 
 **隐写文件**
 <br>
@@ -39,7 +46,7 @@ hinaLayer 是一个使用 C++ 语言，依赖 openCV 库的非常简单的隐写
 
 
 ##hinaLayer.exe
-hinaLayer.exe 是在 windows 下的静态编译版本（使用时不需要机器上有 openCV ）
+hinaLayer.exe 是在 windows 下的静态编译的控制台程序，使用时不需要机器上有 openCV 
 
 `in_file` 是输入文件，`info_file` 是作为写入内容的文件，`out_file` 是输出文件，`rgb`是色彩通道（012顺序BGR，3为使用全部通道），`rgb_`表示可以忽略色彩通道参数，使用默认值3
 
