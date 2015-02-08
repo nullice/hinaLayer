@@ -74,6 +74,22 @@ hinaLayer.exe 是在 windows 下的静态编译的控制台程序，使用时不
 | mirrorX | in_file | out_file | | | (m_x) | 图片X轴镜像（水平翻转）.
 | mirrorY | in_file | out_file | | | (m_y) | 图片Y轴镜像（垂直翻转）.
 
+例子
+
+      `hinaLayer_v1.0.exe en_dtf_mask "1.png" "mask.png" "[en_dtf]1_out.png" 3`<br>
+      `hinaLayer_v1.0.exe  read_dtf "[en_dtf]1_out.png"  3`
+      
+
+
+
+
+
+
+
+
+
+
+
 
 
 ##源码说明
