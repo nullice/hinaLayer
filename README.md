@@ -7,7 +7,7 @@ Image steganography tool
 
 with C++ &amp; openCV
 
-Window GUI App [imageIN](http://nullice.com/imagein) used hinaLayer. ( here hinaLayer is  Console Application)
+Windows GUI App [imageIN](http://nullice.com/imagein) used hinaLayer. ( here hinaLayer is  Console Application)
 
 
 ##介绍
