@@ -10,19 +10,19 @@ with C++ &amp; openCV
 Windows GUI App [imageIN](http://nullice.com/imagein) used hinaLayer. ( here hinaLayer is  Console Application)
 
 
-##介绍
+## 介绍
 hinaLayer 是一个使用 C++ 语言，依赖 openCV 库的非常简单的图片隐写工具<br>
 原本是为一个有着极友好界面的图片隐写工具 [imageIN](http://nullice.com/imagein) 写的临时用的组件
 后来 [imageIN](http://nullice.com/imagein) 源码不幸丢失了:no_mouth:<br>
 [imageIN](http://nullice.com/imagein)的截图：<br>
-![](http://nullice.com/wordpress/wp-content/uploads/2014/11/anime.gif)<br>
+![](https://raw.githubusercontent.com/nullice/hinaLayer/master/about/imageIN_shot.gif)<br>
 
 
-##图片隐写
+## 图片隐写
 图片隐写是在图片内容本身添加信息，你可以图片中写入或者导出不可见的水印或者任何类型的文件，以此隐藏信息。还可以通过构造特殊的有容错性的信息，让图片即是被剪裁、修改还能还原写入的信息。
 片<br>![图片](https://github.com/nullice/hinaLayer/raw/master/Help/in.png)
 
-##功能
+## 功能
 
 **图片奇偶位写入、导出文件、水印**
 <br>
@@ -45,7 +45,7 @@ hinaLayer 是一个使用 C++ 语言，依赖 openCV 库的非常简单的图片
 
 
 
-##hinaLayer.exe
+## hinaLayer.exe
 hinaLayer.exe 是在 windows 下的静态编译的控制台程序，使用时不需要机器上有 openCV 
 
 `in_file` 是输入文件，`info_file` 是作为写入内容的文件，`out_file` 是输出文件，`rgb`是色彩通道（012顺序BGR，3为使用全部通道），`rgb_`表示可以忽略色彩通道参数，使用默认值3
@@ -92,7 +92,7 @@ hinaLayer.exe 是在 windows 下的静态编译的控制台程序，使用时不
 
 
 
-##源码说明
+## 源码说明
 本项目依赖 [ openCV 2.4.10 ](http://opencv.org/downloads.html)，构建于 Visual Studio 2013 可参考[ 这个配置说明 ](https://github.com/nullice/hinaLayer/tree/master/openCV_%E9%85%8D%E7%BD%AE)
 
 `hinaLayer.h 与 hinaLayer.cpp` 中封装了对图片所有进行隐写操作的类
@@ -104,5 +104,5 @@ hinaLayer.exe 是在 windows 下的静态编译的控制台程序，使用时不
 
 
 
-#License
+# License
 BSD
